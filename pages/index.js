@@ -49,6 +49,24 @@ export default function Home() {
                 <li key={item.name}>{item.name}</li>
               ))}
             </ul>
+            <h3>Draft</h3>
+            <ol>
+              {data.draft.map((item, idx) => (
+                <li key={item.name}>
+                  {item.name}
+                  <ul>
+                    {
+                      data.entries.map((entry) => (
+                        <li key={entry.name}>
+                          {entry.name}
+                          {getScores(idx, item, entry)}
+                        </li>
+                      ))
+                    }
+                  </ul>
+                </li>
+              ))}
+            </ol>
           </div>
           <div className="column">
             <h3>Entries</h3>
@@ -66,24 +84,6 @@ export default function Home() {
             </ul>
           </div>
         </div>
-        <h3>Draft</h3>
-        <ol>
-          {data.draft.map((item, idx) => (
-            <li key={item.name}>
-              {item.name}
-              <ul>
-                {
-                  data.entries.map((entry) => (
-                    <li key={entry.name}>
-                      {entry.name}
-                      {getScores(idx, item, entry)}
-                    </li>
-                  ))
-                }
-              </ul>
-            </li>
-          ))}
-        </ol>
       </main>
     </div>
   )

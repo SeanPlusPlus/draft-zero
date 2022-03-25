@@ -22,8 +22,8 @@ const scores = (position, item, entry) => {
   return (
     {
       score: score,
-      floor: '⌀',   // TODO
-      ceiling: '⌀', // TODO
+      floor: 'Ø',   // TODO
+      ceiling: 'Ø', // TODO
     }
   )
 }
