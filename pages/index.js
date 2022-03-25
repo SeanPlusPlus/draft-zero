@@ -1,8 +1,20 @@
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import Head from 'next/head'
-import Image from 'next/image'
 import styles from '../styles/Home.module.css'
+import scores from '../utils/scores'
 
 export default function Home() {
+  const [data, setData] = useState({ items: [], draft: [], entries: [] });
+
+  useEffect(async () => {
+    const result = await axios(
+      '/api/hello',
+    );
+
+    setData(result.data);
+  }, []);
+
   return (
     <div className={styles.container}>
       <Head>
@@ -11,22 +23,61 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://github.com/SeanPlusPlus/draft-zero">Draft Zero</a>
-        </h1>
-
+      <main className="wrapper">
+        <div className="row">
+          <div className="column">
+            <h3>Items</h3>
+            <ul>
+              {data.items.map((item) => (
+                <li key={item.name}>{item.name}</li>
+              ))}
+            </ul>
+          </div>
+          <div className="column">
+            <h3>Entries</h3>
+            <ul>
+              {data.entries.map((entry) => (
+                <li key={entry.name}>
+                  {entry.name}
+                  <ol>
+                    {entry.items.map((i) => (
+                      <li key={i.name}>{i.name}</li>
+                    ))}
+                  </ol>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+        <h3>Draft</h3>
+        <ol>
+          {data.draft.map((item) => (
+            <li key={item.name}>
+              {item.name}
+              <ul>
+                {
+                  data.entries.map((entry) => (
+                    <li key={entry.name}>
+                      {entry.name}
+                      <ul>
+                        <li>
+                          score: {scores(item, entry).score}
+                        </li>
+                        <li>
+                          floor: {scores(item, entry).floor}
+                        </li>
+                        <li>
+                          ceiling: {scores(item, entry).ceiling}
+                        </li>
+                      </ul>
+                    </li>
+                  ))
+                }
+              </ul>
+            </li>
+          ))}
+        </ol>
       </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://twitter.com/seanplusplus"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by SeanPlusPlus
-        </a>
-      </footer>
     </div>
   )
 }
