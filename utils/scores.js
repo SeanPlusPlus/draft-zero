@@ -1,13 +1,29 @@
-const scores = (item, entry) => {
-  console.log(item, entry);
+import _findIndex from 'lodash/findIndex'
 
-  // TODO: this
+const penalty = 10
+
+const scores = (position, item, entry) => {
+  console.log(position, item, entry);
+
+  const { items } = entry
+  
+  let index = _findIndex(items, (i) => (
+    i.name === item.name
+  ))
+
+  if (index === -1) {
+    index = penalty 
+  }
+
+  const diff = Math.abs(index - position)
+
+  const score = Math.pow(diff, 2)
 
   return (
     {
-      score: 0,
-      floor: '⌀',
-      ceiling: '⌀',
+      score: score,
+      floor: '⌀',   // TODO
+      ceiling: '⌀', // TODO
     }
   )
 }

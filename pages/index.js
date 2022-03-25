@@ -4,8 +4,8 @@ import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import scores from '../utils/scores'
 
-const getScores = (item, entry) => {
-  const { score, floor, ceiling } = scores(item, entry)
+const getScores = (position, item, entry) => {
+  const { score, floor, ceiling } = scores(position, item, entry)
   return (
     <ul>
       <li>
@@ -68,7 +68,7 @@ export default function Home() {
         </div>
         <h3>Draft</h3>
         <ol>
-          {data.draft.map((item) => (
+          {data.draft.map((item, idx) => (
             <li key={item.name}>
               {item.name}
               <ul>
@@ -76,7 +76,7 @@ export default function Home() {
                   data.entries.map((entry) => (
                     <li key={entry.name}>
                       {entry.name}
-                      {getScores(item, entry)}
+                      {getScores(idx, item, entry)}
                     </li>
                   ))
                 }
