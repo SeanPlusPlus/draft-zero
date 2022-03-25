@@ -1,24 +1,16 @@
+import _shuffle from 'lodash/shuffle'
+
+const picks = 5
+
 const entry = (items) => {
   return [
     {
       name: 'Ryan',
-      items: [
-        items[3],
-        items[5],
-        items[4],
-        items[1],
-        items[9],
-      ]
+      items: _shuffle(items).slice(0, picks)
     },
     {
       name: 'Sean',
-      items: [
-        items[2],
-        items[5],
-        items[7],
-        items[1],
-        items[6],
-      ]
+      items: _shuffle(items).slice(0, picks)
     },
   ]
 }
