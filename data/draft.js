@@ -1,11 +1,9 @@
+import _shuffle from 'lodash/shuffle'
+
+const picks = 5
+
 const draft = (items) => {
-  return [
-    items[3],
-    items[9],
-    items[5],
-    items[2],
-    items[7],
-  ]
+  return _shuffle(items).slice(0, picks)
 }
 
 export default draft
