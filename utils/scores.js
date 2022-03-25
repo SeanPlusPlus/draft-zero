@@ -6,8 +6,8 @@ const scores = (item, entry) => {
   return (
     {
       score: 0,
-      floor: 0,
-      ceiling: 0,
+      floor: '⌀',
+      ceiling: '⌀',
     }
   )
 }

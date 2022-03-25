@@ -4,6 +4,23 @@ import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import scores from '../utils/scores'
 
+const getScores = (item, entry) => {
+  const { score, floor, ceiling } = scores(item, entry)
+  return (
+    <ul>
+      <li>
+        score: {score}
+      </li>
+      <li>
+        floor: {floor}
+      </li>
+      <li>
+        ceiling: {ceiling}
+      </li>
+    </ul>
+  )
+}
+
 export default function Home() {
   const [data, setData] = useState({ items: [], draft: [], entries: [] });
 
@@ -59,17 +76,7 @@ export default function Home() {
                   data.entries.map((entry) => (
                     <li key={entry.name}>
                       {entry.name}
-                      <ul>
-                        <li>
-                          score: {scores(item, entry).score}
-                        </li>
-                        <li>
-                          floor: {scores(item, entry).floor}
-                        </li>
-                        <li>
-                          ceiling: {scores(item, entry).ceiling}
-                        </li>
-                      </ul>
+                      {getScores(item, entry)}
                     </li>
                   ))
                 }
