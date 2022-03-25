@@ -85,6 +85,9 @@ export default function Home() {
           </div>
         </div>
       </main>
+      <footer className="footer">
+        <a href="https://github.com/SeanPlusPlus/draft-zero">Github</a>
+      </footer>
     </div>
   )
 }
