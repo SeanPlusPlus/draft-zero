@@ -4,6 +4,8 @@ import Head from 'next/head'
 import _orderBy from 'lodash/orderBy'
 import styles from '../styles/Home.module.css'
 
+const API_BASE = '/api/'
+
 const sorted = (entries, i) => {
   return _orderBy(entries.map((entry) => {
     const current = entry.scores[i].score
@@ -40,9 +42,8 @@ export default function Home() {
   }
 
   useEffect(async () => {
-    const result = await axios(
-      '/api/hello',
-    );
+    const url = API_BASE + 'demo'
+    const result = await axios(url);
 
     setData(result.data);
   }, []);
