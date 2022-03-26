@@ -7,6 +7,9 @@ const picks = 5
 const entry = (items, drafted) => {
   const entries = [
     {
+      name: 'Ben',
+    },
+    {
       name: 'Ryan',
     },
     {
