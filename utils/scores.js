@@ -3,8 +3,6 @@ import _findIndex from 'lodash/findIndex'
 const penalty = 10
 
 const scores = (position, item, entry) => {
-  console.log(position, item, entry);
-
   const { items } = entry
   
   let index = _findIndex(items, (i) => (
@@ -22,8 +20,8 @@ const scores = (position, item, entry) => {
   return (
     {
       score: score,
-      floor: 'Ø',   // TODO
-      ceiling: 'Ø', // TODO
+      floor: null,   // TODO
+      ceiling: null, // TODO
     }
   )
 }

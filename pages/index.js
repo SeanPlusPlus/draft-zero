@@ -6,17 +6,24 @@ import scores from '../utils/scores'
 
 const getScores = (position, item, entry) => {
   const { score, floor, ceiling } = scores(position, item, entry)
+  console.log(score, entry);
   return (
     <ul>
-      <li>
-        score: {score}
-      </li>
-      <li>
-        floor: {floor}
-      </li>
-      <li>
-        ceiling: {ceiling}
-      </li>
+      {score && (
+        <li>
+          score: {score}
+        </li>
+      )}
+      {floor && (
+        <li>
+          floor: {floor}
+        </li>
+      )}
+      {ceiling && (
+        <li>
+          ceiling: {ceiling}
+        </li>
+      )}
     </ul>
   )
 }
