@@ -1,6 +1,5 @@
 import _findIndex from 'lodash/findIndex'
-
-const penalty = 10
+import { PENALTY } from './penalty'
 
 const scores = (entry, drafted) => {
   return drafted.map((item, position) => {
@@ -9,7 +8,7 @@ const scores = (entry, drafted) => {
     ))
    
     if (index === -1) {
-      index = penalty 
+      index = PENALTY
     }
 
     const diff = Math.abs(index - position)
