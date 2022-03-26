@@ -16,22 +16,25 @@ const updateEntryTotalScore = (entries, name, score) => {
 }
 
 const entry = (items, drafted) => {
-  const itemsRyan = _shuffle(items).slice(0, picks)
-  const itemsSean = _shuffle(items).slice(0, picks)
-  return [
+  const submissions = [
     {
       name: 'Ryan',
-      score: 0,
-      items: itemsRyan,
-      scores: scores(itemsRyan, drafted)
     },
     {
       name: 'Sean',
-      score: 0,
-      items: itemsSean,
-      scores: scores(itemsSean, drafted)
-    },
+    }
   ]
+  return submissions.map((submission) => {
+    const { name } = submission
+    const entry = _shuffle(items).slice(0, picks)
+    const scores = (entry, drafted)
+    return {
+      name,
+      score: 0,
+      scores,
+      items: entry,
+    }
+  })
 }
 
 export default entry

@@ -18,6 +18,7 @@ const scores = (items, drafted) => {
 
     return (
       {
+        item,
         score: score,
         floor: null,   // TODO
         ceiling: null, // TODO
