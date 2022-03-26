@@ -1,7 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Head from 'next/head'
+import _orderBy from 'lodash/orderBy'
 import styles from '../styles/Home.module.css'
+
+const sorted = (entries, i) => {
+  return _orderBy(entries.map((entry) => {
+    const current = entry.scores[i].score
+    return {
+      ...entry,
+      current
+    }
+  }), ['current'], ['asc'])
+}
 
 export default function Home() {
   const [data, setData] = useState({ items: [], draft: [], entries: [] });
@@ -60,7 +71,7 @@ export default function Home() {
                   {item.name}
                   <ul>
                     {
-                      data.entries.map((entry) => (
+                      sorted(data.entries, idx).map((entry) => (
                         <li key={entry.name}>
                           {entry.name}
                           {getScores(entry, idx)}
