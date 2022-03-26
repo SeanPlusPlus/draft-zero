@@ -1,1 +1,1 @@
-export const PENALTY = 10
+export const PENALTY = 11
