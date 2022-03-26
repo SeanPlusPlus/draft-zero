@@ -2,34 +2,31 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
-import scores from '../utils/scores'
-
-const getScores = (position, item, entry) => {
-  const { score, floor, ceiling } = scores(position, item, entry)
-  console.log(score, entry);
-  return (
-    <ul>
-      {score && (
-        <li>
-          score: {score}
-        </li>
-      )}
-      {floor && (
-        <li>
-          floor: {floor}
-        </li>
-      )}
-      {ceiling && (
-        <li>
-          ceiling: {ceiling}
-        </li>
-      )}
-    </ul>
-  )
-}
 
 export default function Home() {
   const [data, setData] = useState({ items: [], draft: [], entries: [] });
+
+  const getScores = (entry, idx) => {
+    const { scores } = entry 
+    const { score, floor, ceiling } = scores[idx]
+    return (
+      <ul>
+        <li>
+          score: {score}
+        </li>
+        {floor && (
+          <li>
+            floor: {floor}
+          </li>
+        )}
+        {ceiling && (
+          <li>
+            ceiling: {ceiling}
+          </li>
+        )}
+      </ul>
+    )
+  }
 
   useEffect(async () => {
     const result = await axios(
@@ -66,7 +63,7 @@ export default function Home() {
                       data.entries.map((entry) => (
                         <li key={entry.name}>
                           {entry.name}
-                          {getScores(idx, item, entry)}
+                          {getScores(entry, idx)}
                         </li>
                       ))
                     }
@@ -80,7 +77,7 @@ export default function Home() {
             <ul>
               {data.entries.map((entry) => (
                 <li key={entry.name}>
-                  {entry.name}
+                  {entry.name}: {entry.score}
                   <ol>
                     {entry.items.map((i) => (
                       <li key={i.name}>{i.name}</li>
