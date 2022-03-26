@@ -4,18 +4,6 @@ import scores from '../utils/scores'
 
 const picks = 5
 
-const updateEntryTotalScore = (entries, name, score) => {
-  return entries.map((e) => {
-    if (name === e.name) {
-      return {
-        ...e,
-        score: (e.score + score)
-      }
-    }
-    return e
-  })
-}
-
 const entry = (items, drafted) => {
   const entries = [
     {
