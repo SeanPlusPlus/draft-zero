@@ -15,7 +15,7 @@ const sorted = (entries, i) => {
 }
 
 export default function Home() {
-  const [data, setData] = useState({ items: [], draft: [], entries: [] });
+  const [data, setData] = useState({ items: [], draft: [], entries: [], PENALTY: 0 });
 
   const getScores = (entry, idx) => {
     const { scores } = entry 
@@ -97,6 +97,15 @@ export default function Home() {
                 </li>
               ))}
             </ul>
+            <h3>About</h3>
+            <p>Each entry is a random draft prediction for an Avenger in a hypothetical draft. The entry receives the square of the absolute value of the number of positions they are off from where the Avenger was actually drafted.</p>
+            <p>Thus, if Hulk goes number one overall, and your entry predicts him going fourth, then your score for that pick is nine:</p>
+            <p><code className="code">(4 - 1) ^ 2 = 9</code></p>
+            <p>If the Avenger is drafted in the spot where the entry predicted they would be drafted, then the score for that pick is zero.</p>
+            <p>If an Avenger is drafted and they are not listed in the entry at all, then they are scored as if they were predicted to be drafted number <code className="code">{data.PENALTY}</code> overall.</p>
+            <p>Thus, if Thor goes number one overall, and you did not predict that he would be drafted, then your score for that pick would be</p>
+            <p><code className="code">{`(1 - {PENALTY}) ^ 2 = ${Math.pow(Math.abs(data.PENALTY - 1), 2)}`}</code></p>
+            <p>Lowest score wins.</p>
           </div>
         </div>
       </main>

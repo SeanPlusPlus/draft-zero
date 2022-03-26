@@ -57,3 +57,8 @@ a {
 .entry {
   padding-bottom: 15px;
 }
+
+.code {
+  font-weight: bold;
+  font-size: 1rem;
+}
