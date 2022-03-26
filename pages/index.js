@@ -76,7 +76,7 @@ export default function Home() {
             <h3>Entries</h3>
             <ul>
               {data.entries.map((entry) => (
-                <li key={entry.name}>
+                <li key={entry.name} className="entry">
                   {entry.name}: {entry.score}
                   <ol>
                     {entry.items.map((i) => (

@@ -53,3 +53,7 @@ a {
   align-items: center;
   flex-grow: 1;
 }
+
+.entry {
+  padding-bottom: 15px;
+}

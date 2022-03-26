@@ -1,4 +1,5 @@
 import _shuffle from 'lodash/shuffle'
+import _orderBy from 'lodash/orderBy'
 import scores from '../utils/scores'
 
 const picks = 5
@@ -16,7 +17,7 @@ const updateEntryTotalScore = (entries, name, score) => {
 }
 
 const entry = (items, drafted) => {
-  const submissions = [
+  const entries = [
     {
       name: 'Ryan',
     },
@@ -24,17 +25,21 @@ const entry = (items, drafted) => {
       name: 'Sean',
     }
   ]
-  return submissions.map((submission) => {
+  const submissions = entries.map((submission) => {
     const { name } = submission
     const entry = _shuffle(items).slice(0, picks)
-    const scores = (entry, drafted)
+    const result = scores(entry, drafted)
+    const total = result.reduce((a, b) => ({ score: a.score + b.score}))
+    const { score } = total
     return {
       name,
-      score: 0,
-      scores,
+      score,
       items: entry,
+      scores: result,
     }
   })
+  const ordered = _orderBy(submissions, ['score'], ['asc'])
+  return ordered
 }
 
 export default entry

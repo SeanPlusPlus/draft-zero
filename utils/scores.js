@@ -2,9 +2,9 @@ import _findIndex from 'lodash/findIndex'
 
 const penalty = 10
 
-const scores = (items, drafted) => {
+const scores = (entry, drafted) => {
   return drafted.map((item, position) => {
-    let index = _findIndex(items, (i) => (
+    let index = _findIndex(entry, (i) => (
       i.name === item.name
     ))
    
