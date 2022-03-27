@@ -3,6 +3,9 @@ const items = [
     name: 'Ant Man',
   },
   {
+    name: 'Black Panther',
+  },
+  {
     name: 'Captain America',
   },
   {
