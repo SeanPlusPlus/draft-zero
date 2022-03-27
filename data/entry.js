@@ -20,7 +20,7 @@ const entry = (items, drafted) => {
     const { name } = submission
     const entry = _shuffle(items).slice(0, picks)
     const result = scores(entry, drafted)
-    const total = result.reduce((a, b) => ({ score: a.score + b.score}))
+    const total = result.reduce((a, b) => ({ score: a.score + b.score }))
     const { score } = total
     return {
       name,
