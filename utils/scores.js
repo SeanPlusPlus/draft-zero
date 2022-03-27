@@ -3,6 +3,7 @@ import { PENALTY } from './penalty'
 
 const scores = (entry, drafted) => {
   return drafted.map((item, idx) => {
+    // array is zero-indexed, thus the first pick would be 0
     const position = idx + 1
  
     let index = _findIndex(entry, (i) => (
@@ -12,7 +13,7 @@ const scores = (entry, drafted) => {
     if (index === -1) {
       index = PENALTY
     } else {
-      index += 1
+      index += 1 // also to handle zero-indexing of array
     }
 
     const diff = Math.abs(index - position)
