@@ -16,30 +16,30 @@ const sorted = (entries, i) => {
   }), ['current'], ['asc'])
 }
 
+const getScores = (entry, idx) => {
+  const { scores } = entry 
+  const { score, floor, ceiling } = scores[idx]
+  return (
+    <ul>
+      <li>
+        score: {score}
+      </li>
+      {floor && (
+        <li>
+          floor: {floor}
+        </li>
+      )}
+      {ceiling && (
+        <li>
+          ceiling: {ceiling}
+        </li>
+      )}
+    </ul>
+  )
+}
+
 export default function Home() {
   const [data, setData] = useState({ items: [], draft: [], entries: [], PENALTY: 0 });
-
-  const getScores = (entry, idx) => {
-    const { scores } = entry 
-    const { score, floor, ceiling } = scores[idx]
-    return (
-      <ul>
-        <li>
-          score: {score}
-        </li>
-        {floor && (
-          <li>
-            floor: {floor}
-          </li>
-        )}
-        {ceiling && (
-          <li>
-            ceiling: {ceiling}
-          </li>
-        )}
-      </ul>
-    )
-  }
 
   useEffect(async () => {
     const url = API_BASE + 'demo'
