@@ -1,16 +1,18 @@
-import { findUser, createUser } from '../../utils/users'
+import { findUser, createUser, updateUserNonce } from '../../utils/users'
+import { getNonce } from '../../utils/nonce'
 
 export default async function auth(req, res) {
-  const {address} = req.query
+  const { address } = req.query
   let user
   try {
-    user = await findUser(address)
+    const exists = await findUser(address)
+    const { data, ref: { id }} = exists
+    user = await updateUserNonce({ id, data, nonce: getNonce() })
   } catch (e) {
     user = await createUser({
       address,
-      nonce: Math.floor(Math.random() * 10000000)
+      nonce: getNonce()
     })
   }
-  // TODO update nonce if user exists
-  res.status(200).json(user)  
+  res.status(200).json(user.data)  
 }

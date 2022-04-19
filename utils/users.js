@@ -13,6 +13,7 @@ const client = new faunadb.Client({
 
 const {
   Collection,
+  Update,
   Ref,
   Get,
   Select,
@@ -45,7 +46,7 @@ export async function findUser(address) {
     )
   )
 
-  return user.data
+  return user
 }
 
 export async function createUser({ address, nonce }) {
@@ -62,16 +63,32 @@ export async function createUser({ address, nonce }) {
     return {valid: false, message: 'Username exists'}
   }
 
-  const user = {
+  const new_user = {
     address,
     nonce,
   }
  
   const collection = 'users'
-  const new_user = await client.query(
+  const user = await client.query(
     Create(
       Collection(collection),
-      { data: user }
+      { data: new_user }
+    )
+  )
+
+  return user
+}
+
+export async function updateUserNonce({ id, data, nonce }) {
+  const updated_user = {
+    ...data,
+    nonce,
+  }
+  const collection = 'users'
+  const user = await client.query(
+    Update(
+      Ref(Collection(collection), id),
+      { data: updated_user },
     )
   )
 
