@@ -6,10 +6,10 @@ const Nav = () => {
   const { pathname } = router
 
   return (
-    <div className="navbar mb-8 shadow-lg bg-neutral text-neutral-content">
+    <div className="navbar shadow-lg bg-neutral text-neutral-content">
       <div className="flex-1">
         <Link href="/">
-          <a className="btn btn-ghost normal-case text-xl">
+          <a className="btn btn-outline normal-case text-xl ml-2">
             Draft<span role="img" aria-label="zero" className="ml-2">0️⃣</span>
           </a>
         </Link>

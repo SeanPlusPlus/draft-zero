@@ -5,12 +5,11 @@ import Head from 'next/head'
 
 // components
 import Nav from '../components/nav'
+import Home from '../components/home'
 
-export default function Home() {
+export default function App() {
   const { user: { authenticated } } = useContext(GlobalContext)
-  const handleLogin = () => {
-    console.log('login ...');
-  }
+
   return (
     <>
       <Head>
@@ -18,13 +17,8 @@ export default function Home() {
         <meta name="description" content="Draft Zero" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
-      <main>
-        <Nav />
-        { authenticated === null && (
-          <button className="btn btn-outline btn-secondary" onClick={handleLogin}>login</button>
-        )}
-      </main>
+      <Nav />
+      <Home />
     </>
   )
 }
