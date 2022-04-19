@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Head from 'next/head'
 import _orderBy from 'lodash/orderBy'
-import styles from '../styles/Home.module.css'
 
 const API_BASE = '/api/'
 
@@ -49,7 +48,7 @@ export default function Demo() {
   }, []);
 
   return (
-    <div className={styles.container}>
+    <>
       <Head>
         <title>Draft Zero</title>
         <meta name="description" content="Draft Zero" />
@@ -110,6 +109,6 @@ export default function Demo() {
           </div>
         </div>
       </main>
-    </div>
+    </>
   )
 }
