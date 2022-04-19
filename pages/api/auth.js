@@ -1,18 +1,16 @@
-import { users } from '../../utils/users'
+import { findUser, createUser } from '../../utils/users'
 
-export default function auth(req, res) {
+export default async function auth(req, res) {
   const {address} = req.query
-  let user = users[address]
-  if (!user) {
-    user = {
+  let user
+  try {
+    user = await findUser(address)
+  } catch (e) {
+    user = await createUser({
       address,
       nonce: Math.floor(Math.random() * 10000000)
-    }
-    users[address] = user
-  } else {
-    const nonce = Math.floor(Math.random() * 10000000)
-    user.nonce = nonce
-    users[address] = user
+    })
   }
+  // TODO update nonce if user exists
   res.status(200).json(user)  
 }
