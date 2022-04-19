@@ -1,7 +1,13 @@
 import React from 'react';
+import { useContext } from 'react'
+import { GlobalContext } from '../context/GlobalState'
 import Head from 'next/head'
 
 export default function Home() {
+  const { user: { authenticated } } = useContext(GlobalContext)
+  const handleLogin = () => {
+    console.log('login ...');
+  }
   return (
     <>
       <Head>
@@ -10,10 +16,11 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="wrapper">
-        <div className="row">
-          <h1>Draft Zero</h1>
-        </div>
+      <main>
+        <h1 className="text-3xl">Draft Zero</h1>
+        {authenticated === null && (
+          <button className="btn btn-outline btn-secondary" onClick={handleLogin}>login</button>
+        )}
       </main>
     </>
   )
