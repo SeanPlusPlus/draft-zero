@@ -14,5 +14,8 @@ export default async function auth(req, res) {
       nonce: getNonce()
     })
   }
-  res.status(200).json(user.data)  
+  res.status(200).json({
+    ...user.data,
+    message: 'hello world'
+  })  
 }
