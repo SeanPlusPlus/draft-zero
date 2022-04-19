@@ -3,6 +3,9 @@ import { useContext } from 'react'
 import { GlobalContext } from '../context/GlobalState'
 import Head from 'next/head'
 
+// components
+import Nav from '../components/nav'
+
 export default function Home() {
   const { user: { authenticated } } = useContext(GlobalContext)
   const handleLogin = () => {
@@ -17,8 +20,8 @@ export default function Home() {
       </Head>
 
       <main>
-        <h1 className="text-3xl">Draft Zero</h1>
-        {authenticated === null && (
+        <Nav />
+        { authenticated === null && (
           <button className="btn btn-outline btn-secondary" onClick={handleLogin}>login</button>
         )}
       </main>
