@@ -7,11 +7,15 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@toruslabs/torus-embed": "^1.22.2",
+    "@walletconnect/web3-provider": "^1.7.7",
     "axios": "^0.26.1",
+    "ethers": "^5.6.4",
     "lodash": "^4.17.21",
     "next": "12.1.0",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-dom": "17.0.2",
+    "web3modal": "^1.9.7"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.4",

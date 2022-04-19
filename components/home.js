@@ -1,6 +1,9 @@
 import { useContext } from 'react'
 import { GlobalContext } from '../context/GlobalState'
 
+// components
+import Login from './login'
+
 const Home = () => {
   const { user: { authenticated } } = useContext(GlobalContext)
   
@@ -13,7 +16,7 @@ const Home = () => {
             Build a prediction for any draft
           </p>
           { authenticated === null && (
-            <button className="btn btn-primary">Login</button>
+            <Login />
           )}
         </div>
       </div>
