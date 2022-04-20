@@ -1,5 +1,5 @@
 import { findUser, createUser, updateUserNonce } from '../../utils/users'
-import { getNonce } from '../../utils/nonce'
+import { getSession } from '../../utils/session'
 
 export default async function auth(req, res) {
   const { address } = req.query
@@ -7,11 +7,11 @@ export default async function auth(req, res) {
   try {
     const exists = await findUser(address)
     const { data, ref: { id }} = exists
-    user = await updateUserNonce({ id, data, nonce: getNonce() })
+    user = await updateUserNonce({ id, data, nonce: getSession() })
   } catch (e) {
     user = await createUser({
       address,
-      nonce: getNonce()
+      nonce: getSession()
     })
   }
   res.status(200).json({
