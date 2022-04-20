@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { ethers } from 'ethers'
 import Web3Modal from 'web3modal'
 import WalletConnectProvider from '@walletconnect/web3-provider'
+import { Link } from '@imtbl/imx-sdk'
 import { getName } from '../utils/name'
 
 const Login = () => {
@@ -35,6 +36,9 @@ const Login = () => {
     const connection = await web3Modal.connect()
     const provider = new ethers.providers.Web3Provider(connection)
     const accounts = await provider.listAccounts()
+    console.log(provider);
+    console.log(connection);
+
     setConnection(connection)
     setAccount(accounts[0])
   }
@@ -54,6 +58,15 @@ const Login = () => {
     setLoggedIn(data.authenticated)
   }
 
+  async function setupImxAccount() {
+    const link = new Link('https://link.ropsten.x.immutable.com');
+
+    // Register user, you can persist address to local storage etc.
+    const {address, starkPublicKey } = await link.setup({});
+    console.log('address', address);
+    console.log('starkPublicKey', starkPublicKey);
+}
+
   return(
       <div>
         {
@@ -65,7 +78,13 @@ const Login = () => {
           </div>
         )}
         {
-          loggedIn && <h3>Welcome, {name || account}</h3>
+          loggedIn && (
+            <>
+              <h3>Welcome, {name || account}</h3>
+              <div className="divider"></div>
+              <button className="btn" onClick={setupImxAccount}>Setup IMX</button>
+            </>
+          )
          }
       </div>
   )
