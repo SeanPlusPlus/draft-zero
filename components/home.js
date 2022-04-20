@@ -1,12 +1,7 @@
-import { useContext } from 'react'
-import { GlobalContext } from '../context/GlobalState'
-
 // components
 import Login from './login'
 
 const Home = () => {
-  const { account } = useContext(GlobalContext)
-  
   return (
     <div className="hero">
       <div className="hero-content text-center">

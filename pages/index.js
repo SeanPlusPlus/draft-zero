@@ -7,7 +7,7 @@ import Home from '../components/home'
 
 export default function App() {
   return (
-    <>
+    <div className="min-h-screen grid-bg">
       <Head>
         <title>Draft Zero</title>
         <meta name="description" content="Draft Zero" />
@@ -15,6 +15,6 @@ export default function App() {
       </Head>
       <Nav />
       <Home />
-    </>
+    </div>
   )
 }
