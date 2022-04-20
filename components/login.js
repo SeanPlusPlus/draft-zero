@@ -44,7 +44,6 @@ const Login = () => {
     const user = await authData.json()
     const provider = new ethers.providers.Web3Provider(connection)
     const signer = provider.getSigner()
-    // const signature = await signer.signMessage(`Session ID: ${user.nonce.toString()}`)
     const signature = await signer.signMessage(user.nonce.toString())
     const response = await fetch(`/api/verify?address=${account}&signature=${signature}`)
     const data = await response.json()
