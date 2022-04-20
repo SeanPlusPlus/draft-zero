@@ -1,5 +1,6 @@
 // components
 import Login from './login'
+import DraftLink from './draftLink'
 
 const Home = () => {
   return (
@@ -11,6 +12,7 @@ const Home = () => {
             Build a prediction for any draft
           </p>
           <Login />
+          <DraftLink />
         </div>
       </div>
     </div>
