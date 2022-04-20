@@ -8,6 +8,7 @@ import { log } from '../utils/logger'
 
 const initialState = {
   networkVersion: null,
+  signingIn: null,
   account: null,
   name: null,
   loggedIn: null,
@@ -28,6 +29,13 @@ export const GlobalProvider = ({
   function setNetworkVersion(data) {
     dispatch({
       type: 'UPDATE_NETWORK_VERSION',
+      payload: data
+    });
+  }
+
+  function setSigningIn(data) {
+    dispatch({
+      type: 'UPDATE_SIGNING_IN',
       payload: data
     });
   }
@@ -83,6 +91,10 @@ export const GlobalProvider = ({
         // networkVersion
         networkVersion: state.networkVersion,
         setNetworkVersion,
+
+        // signingIn 
+        signingIn: state.signingIn,
+        setSigningIn,
         
         // account
         account: state.account,

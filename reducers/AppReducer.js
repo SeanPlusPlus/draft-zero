@@ -12,6 +12,11 @@ export default (state, action) => {
         ...state,
         networkVersion: action.payload,
       }
+    case 'UPDATE_SIGNING_IN':
+      return {
+        ...state,
+        signingIn: action.payload,
+      }
     case 'UPDATE_ACCOUNT':
       return {
         ...state,

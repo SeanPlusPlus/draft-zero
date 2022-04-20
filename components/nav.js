@@ -10,7 +10,7 @@ const Nav = () => {
       <div className="flex-1">
         <Link href="/">
           <a className="btn btn-outline normal-case text-xl ml-2">
-            Draft<span role="img" aria-label="zero" className="ml-2">0️⃣</span>
+            <span className="text-slate-300">Draft</span><span role="img" aria-label="zero" className="ml-2">0️⃣</span>
           </a>
         </Link>
       </div>

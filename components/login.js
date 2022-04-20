@@ -6,12 +6,19 @@ import { Link } from '@imtbl/imx-sdk'
 import { GlobalContext } from '../context/GlobalState'
 import { getName, getShortAddress } from '../utils/name'
 
+// components
+import Loading from './loading'
+
 const Login = () => {
 
   const {
     // networkVersion 
     networkVersion,
     setNetworkVersion,
+
+    // signingIn
+    signingIn,
+    setSigningIn,
     
     // account
     account,
@@ -71,11 +78,13 @@ const Login = () => {
     const provider = new ethers.providers.Web3Provider(connection)
     const signer = provider.getSigner()
     const signature = await signer.signMessage(user.nonce.toString())
+    setSigningIn(true)
     const response = await fetch(`/api/verify?address=${account}&signature=${signature}`)
     const data = await response.json()
     const address = await signer.getAddress();
     const ensName = await provider.lookupAddress(address);
     const name = getName({ ensName, address });
+    setSigningIn(false)
     setName(name)
     setLoggedIn(data.authenticated)
   }
@@ -99,7 +108,13 @@ const Login = () => {
         { connection && !loggedIn && (
           <div>
             { networkVersion === '3' ? (
-              <button className="btn" onClick={signIn}>Sign In</button>
+              <>
+                {signingIn ? (
+                  <Loading />
+                ) : (
+                  <button className="btn px-12" onClick={signIn}>Sign In</button>
+                )}
+              </>
             ) : (
               <>
                 <button className="btn" onClick={connect}>Connect Wallet</button>
