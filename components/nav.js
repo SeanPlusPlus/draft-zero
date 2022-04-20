@@ -82,7 +82,7 @@ const Nav = () => {
               <div className="divider" />
               <p className="pt-1">
                 Stark Key:
-            <br />
+                <br />
                 <code className="font-semibold">{getShortAddress(imx.starkPublicKey)}</code>
               </p>
             </>
