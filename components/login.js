@@ -1,15 +1,35 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { ethers } from 'ethers'
 import Web3Modal from 'web3modal'
 import WalletConnectProvider from '@walletconnect/web3-provider'
 import { Link } from '@imtbl/imx-sdk'
+import { GlobalContext } from '../context/GlobalState'
 import { getName } from '../utils/name'
 
 const Login = () => {
-  const [account, setAccount] = useState('')
-  const [name, setName] = useState(null)
-  const [connection, setConnection] = useState(false)
-  const [loggedIn, setLoggedIn] = useState(false)
+
+  const {
+    // account
+    account,
+    setAccount,
+
+    // name
+    name,
+    setName,
+
+    // connection
+    connection,
+    setConnection,
+  
+    // loggedIn
+    loggedIn,
+    setLoggedIn,
+
+    // imx
+    imx,
+    setImx,
+  } = useContext(GlobalContext)
+  
 
   async function getWeb3Modal() {
     let Torus = (await import('@toruslabs/torus-embed')).default
@@ -36,9 +56,6 @@ const Login = () => {
     const connection = await web3Modal.connect()
     const provider = new ethers.providers.Web3Provider(connection)
     const accounts = await provider.listAccounts()
-    console.log(provider);
-    console.log(connection);
-
     setConnection(connection)
     setAccount(accounts[0])
   }
@@ -63,8 +80,10 @@ const Login = () => {
 
     // Register user, you can persist address to local storage etc.
     const {address, starkPublicKey } = await link.setup({});
-    console.log('address', address);
-    console.log('starkPublicKey', starkPublicKey);
+    setImx({
+      address,
+      starkPublicKey,
+    })
 }
 
   return(
@@ -82,7 +101,11 @@ const Login = () => {
             <>
               <h3>Welcome, {name || account}</h3>
               <div className="divider"></div>
-              <button className="btn" onClick={setupImxAccount}>Setup IMX</button>
+              {!imx ? (
+                <button className="btn" onClick={setupImxAccount}>Setup IMX</button>
+              ) : (
+                <h3>{imx.starkPublicKey}</h3>
+              )}
             </>
           )
          }

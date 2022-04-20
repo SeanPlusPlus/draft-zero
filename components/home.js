@@ -5,7 +5,7 @@ import { GlobalContext } from '../context/GlobalState'
 import Login from './login'
 
 const Home = () => {
-  const { user: { authenticated } } = useContext(GlobalContext)
+  const { account } = useContext(GlobalContext)
   
   return (
     <div className="hero">
@@ -15,9 +15,7 @@ const Home = () => {
           <p className="py-6">
             Build a prediction for any draft
           </p>
-          { authenticated === null && (
-            <Login />
-          )}
+          <Login />
         </div>
       </div>
     </div>

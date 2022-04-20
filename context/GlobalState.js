@@ -7,7 +7,12 @@ import AppReducer from '../reducers/AppReducer';
 import { log } from '../utils/logger'
 
 const initialState = {
-  user: { authenticated: null },
+  account: null,
+  name: null,
+  loggedIn: null,
+  provider: null,
+  connection: null,
+  imx: null,
 }
 
 export const GlobalContext = createContext(initialState);
@@ -19,10 +24,45 @@ export const GlobalProvider = ({
 
   // Actions for changing state
 
-  function setUser(data) {
+  function setAccount(data) {
     dispatch({
-      type: 'UPDATE_USER',
-      payload: data 
+      type: 'UPDATE_ACCOUNT',
+      payload: data
+    });
+  }
+
+  function setName(data) {
+    dispatch({
+      type: 'UPDATE_NAME',
+      payload: data
+    });
+  }
+
+  function setLoggedIn(data) {
+    dispatch({
+      type: 'UPDATE_LOGGED_IN',
+      payload: data
+    });
+  }
+
+  function setProvider(data) {
+    dispatch({
+      type: 'UPDATE_PROVIDER',
+      payload: data
+    });
+  }
+
+  function setConnection(data) {
+    dispatch({
+      type: 'UPDATE_CONNECTION',
+      payload: data
+    });
+  }
+
+  function setImx(data) {
+    dispatch({
+      type: 'UPDATE_IMX',
+      payload: data
     });
   }
 
@@ -32,8 +72,29 @@ export const GlobalProvider = ({
 
   return ( <GlobalContext.Provider value = {
       {
-        user: state.user,
-        setUser,
+        // account
+        account: state.account,
+        setAccount,
+        
+        // name
+        name: state.name,
+        setName,
+        
+        // loggedIn
+        loggedIn: state.loggedIn,
+        setLoggedIn,
+        
+        // provider
+        provider: state.provider,
+        setProvider,
+        
+        // connection
+        connection: state.connection,
+        setConnection,
+        
+        // imx
+        imx: state.imx,
+        setImx,
       }
     } > {
       children
