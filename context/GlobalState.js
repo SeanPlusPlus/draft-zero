@@ -7,6 +7,7 @@ import AppReducer from '../reducers/AppReducer';
 import { log } from '../utils/logger'
 
 const initialState = {
+  networkVersion: null,
   account: null,
   name: null,
   loggedIn: null,
@@ -23,6 +24,13 @@ export const GlobalProvider = ({
   const [state, dispatch] = useReducer(AppReducer, initialState);
 
   // Actions for changing state
+
+  function setNetworkVersion(data) {
+    dispatch({
+      type: 'UPDATE_NETWORK_VERSION',
+      payload: data
+    });
+  }
 
   function setAccount(data) {
     dispatch({
@@ -72,6 +80,10 @@ export const GlobalProvider = ({
 
   return ( <GlobalContext.Provider value = {
       {
+        // networkVersion
+        networkVersion: state.networkVersion,
+        setNetworkVersion,
+        
         // account
         account: state.account,
         setAccount,

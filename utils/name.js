@@ -1,3 +1,7 @@
+export const getShortAddress = (address) => (
+  `${address.substring(0, 4)}...${address.substring(address.length - 4)}`
+)
+
 export const getName = (payload) => {
   const { ensName, address } = payload;
 
@@ -9,5 +13,5 @@ export const getName = (payload) => {
     return ensName;
   }
  
-  return address.substring(address.length - 4);
+  return getShortAddress(address)
 }
