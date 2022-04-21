@@ -11,6 +11,8 @@ import { draft } from '../../utils/nfl/draft'
 
 export default function NFL() {
   const [warning, setWarning] = useState(null)
+  const [draftName, setDraftName] = useState(null)
+ 
   const {
     // picks
     picks,
@@ -54,9 +56,18 @@ export default function NFL() {
     setPicks(updatePick(picks, place, name))
   }
 
+  const handleName = (e) => {
+    e.preventDefault()
+    setDraftName(e.target.value)
+  }
+
   const handleSubmit = async () => {
     window.scrollTo({top: 0, left: 0, behavior: 'smooth' });
-    console.log(picks);
+    if (!draftName) {
+      setWarning('Draft name required')
+      return
+    }
+ 
     const selected = picks.every((p) => (p !== null))
     if (!selected) {
       setWarning('Each pick must be selected')
@@ -66,7 +77,7 @@ export default function NFL() {
     const options = {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(picks)
+      body: JSON.stringify({picks, name: draftName})
     }
     const res = await fetch(`/api/nfl/${year}`, options)
     const json = await res.json()
@@ -112,6 +123,11 @@ export default function NFL() {
                       </li>
                     ))}
                   </ul>
+                  {(warning && !draftName) ? (
+                    <input type="text" placeholder="Name" onChange={handleName} className="input input-bordered input-warning w-full max-w-xs" />
+                  ) : (
+                    <input type="text" placeholder="Name" onChange={handleName} className="input input-bordered w-full max-w-xs" />
+                  ) }
                   <button className="btn btn-info" onClick={handleSubmit}>submit</button>
                 </div>
               </div>
