@@ -94,7 +94,9 @@ export default function NFL() {
                             <option>#{i + 1}</option>
                           )}
                           {options.map((o, idx) => (
-                            <option key={idx} value={`${i}:${o}`}>{o}</option>
+                            <option key={idx} value={`${i}:${o}`} disabled={picks.includes(o)}>
+                              {picks[i] === o ? `#${i + 1} ${o}` : o}
+                            </option>
                           ))}
                         </select>
                       </li>
