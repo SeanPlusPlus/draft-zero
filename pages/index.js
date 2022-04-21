@@ -12,7 +12,7 @@ const isProd = NODE_ENV === 'production';
 const METAMASK_URL = 'https://metamask.app.link/dapp/draft-zero.vercel.app/'
 
 export default function App() {
-  if (isMobile && !isProd) {
+  if (isMobile && isProd) {
     return (
       <div className="min-h-screen grid-bg">
         <Header />
