@@ -5,6 +5,7 @@ import { GlobalContext } from '../../context/GlobalState'
 // components
 import Header from '../../components/header'
 import Nav from '../../components/nav'
+import Loading from '../../components/loading'
 
 // draft options
 import { draft } from '../../utils/nfl/draft'
@@ -12,6 +13,7 @@ import { draft } from '../../utils/nfl/draft'
 export default function NFL() {
   const [warning, setWarning] = useState(null)
   const [draftName, setDraftName] = useState(null)
+  const [submitting, setSubmitting] = useState(null)
  
   const {
     // picks
@@ -62,14 +64,17 @@ export default function NFL() {
   }
 
   const handleSubmit = async () => {
-    window.scrollTo({top: 0, left: 0, behavior: 'smooth' });
+    setSubmitting(true)
+
     if (!draftName) {
+      window.scrollTo({top: 0, left: 0, behavior: 'smooth' });
       setWarning('Draft name required')
       return
     }
  
     const selected = picks.every((p) => (p !== null))
     if (!selected) {
+      window.scrollTo({top: 0, left: 0, behavior: 'smooth' });
       setWarning('Each pick must be selected')
       return
     }
@@ -97,14 +102,14 @@ export default function NFL() {
               <p className="py-6">
                 Predict the order for the {year} NFL Draft
               </p>
-                {warning && (
-                  <div className="alert alert-warning shadow-lg mb-3">
-                    <div>
-                      <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
-                      <span>{warning}</span>
-                    </div>
+              {warning && (
+                <div className="alert alert-warning shadow-lg mb-3">
+                  <div>
+                    <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                    <span>{warning}</span>
                   </div>
-                )}
+                </div>
+              )}
               <div className="card md:w-96 bg-base-100 shadow-xl">
                 <div className="card-body">
                   <ul>
@@ -115,7 +120,7 @@ export default function NFL() {
                             <option>#{i + 1}</option>
                           )}
                           {options.map((o, idx) => (
-                            <option key={idx} value={`${i}:${o}`} disabled={picks.includes(o)}>
+                            <option key={idx} value={`${i}:${o}`} disabled={picks.includes(o) || submitting}>
                               {picks[i] === o ? `#${i + 1} ${o}` : o}
                             </option>
                           ))}
@@ -126,9 +131,16 @@ export default function NFL() {
                   {(warning && !draftName) ? (
                     <input type="text" placeholder="Name" onChange={handleName} className="input input-bordered input-warning w-full max-w-xs" />
                   ) : (
-                    <input type="text" placeholder="Name" onChange={handleName} className="input input-bordered w-full max-w-xs" />
+                    <input type="text" placeholder="Name" onChange={handleName} className="input input-bordered w-full max-w-xs" disabled={submitting} />
                   ) }
-                  <button className="btn btn-info" onClick={handleSubmit}>submit</button>
+                  {submitting ? (
+                    <div className="mt-3">
+                      <Loading />
+                    </div>
+                  ) : (
+                    <button className="btn btn-info" onClick={handleSubmit}>submit</button>
+                  )
+                  }
                 </div>
               </div>
             </div>
