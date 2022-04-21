@@ -22,9 +22,10 @@ const Info = () => (
 )
 
 export default function NFL() {
-  const [warning, setWarning] = useState(null)
-  const [draftName, setDraftName] = useState(null)
-  const [submitting, setSubmitting] = useState(null)
+  const [ modal, setModal ] = useState('')
+  const [ warning, setWarning ] = useState(null)
+  const [ draftName, setDraftName ] = useState(null)
+  const [ submitting, setSubmitting ] = useState(null)
  
   const {
     // picks
@@ -51,7 +52,7 @@ export default function NFL() {
   }, [year])
 
   useEffect(() => {
-    setPicks(Array(3).fill(null))
+    setPicks(Array(1).fill(null))
   }, [])
 
   const updatePick = (picks, place, name) => {
@@ -104,8 +105,8 @@ export default function NFL() {
     }
     const res = await fetch(`/api/nfl/${year}`, options)
     const json = await res.json()
-
     console.log('json', json);
+    setModal('modal-open')
   }
  
   return (
@@ -119,7 +120,7 @@ export default function NFL() {
               {!account && (
                 <Info />
               )}
-              <h1 className="text-5xl font-bold">NFL {year}</h1>
+              <h1 className="text-4xl font-bold">NFL {year}</h1>
               <p className="py-6">
                 Predict the order for the {year} NFL Draft
               </p>
@@ -167,6 +168,30 @@ export default function NFL() {
           </div>
         )}
       </div>
+
+      <div className={`modal ${modal}`}>
+        <div className="modal-box">
+          <h3 className="font-bold text-xl flex">
+            <span className="ml-1 text-4xl mb-4">
+              Success!
+            </span>
+          </h3>
+          <p className="pt-4">
+            <code>{draftName}</code>
+          </p>
+          <p className="pt-4">
+            Your draft prediction was received
+          </p>
+          <div className="modal-action pt-5">
+            <Link href={`/nfl/leaderboard/${year}`}>
+              <a className="btn">
+                Visit the leaderbaord
+              </a>
+            </Link>
+          </div>
+        </div>
+      </div>
+
     </div>
   )
 }
