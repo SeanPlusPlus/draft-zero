@@ -6,7 +6,10 @@ import React, {
 import AppReducer from '../reducers/AppReducer';
 import { log } from '../utils/logger'
 
+const { env: { NODE_ENV }} = process
+
 const initialState = {
+  NODE_ENV,
   networkVersion: null,
   signingIn: null,
   account: null,

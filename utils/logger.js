@@ -1,9 +1,9 @@
 const { NODE_ENV } = process.env;
 
-const DEBUG = NODE_ENV === 'development';
+const isDev = NODE_ENV === 'development';
 
 export const log = (status, color, data) => {
-  if (DEBUG) {
+  if (isDev) {
     console.log(`%c ${status}`, `color: ${color}; font-weight:bold;`, data);
   }
 }
