@@ -1,46 +1,60 @@
-import React from 'react';
+import React, { useContext } from 'react'
+import { GlobalContext } from '../context/GlobalState'
 
 // components
 import Header from '../components/header'
 import Nav from '../components/nav'
 
 export default function NFL() {
+  const {
+    // picks
+    picks,
+    setPicks,
+  } = useContext(GlobalContext)
 
-  const picks = Array(32).fill({});
   const options = [
-    ["Aidan Hutchinson", "Michigan", "DE"],
-    ["Ikem Ekwonu", "NC State", "OT"],
-    ["Evan Neal", "Alabama", "OT"],
-    ["Kyle Hamilton", "Notre Dame", "S"],
-    ["Ahmad Gardner", "Cincinnati", "CB"],
-    ["Garrett Wilson", "Ohio State", "WR"],
-    ["Kayvon Thibodeaux", "Oregon", "DE"],
-    ["Travon Walker", "Georgia", "DE"],
-    ["Drake London", "USC", "WR"],
-    ["Jermaine Johnson II", "Florida State", "DE"],
-    ["Derek Stingley Jr.", "LSU", "CB"],
-    ["Nakobe Dean", "Georgia", "ILB"],
-    ["Devin Lloyd", "Utah", "ILB"],
-    ["Trent McDuffie", "Washington", "CB"],
-    ["Charles Cross", "Mississippi State", "OT"],
-    ["Jordan Davis", "Georgia", "DT"],
-    ["Chris Olave", "Ohio State", "WR"],
-    ["Tyler Linderbaum", "Iowa", "C"],
-    ["Jameson Williams", "Alabama", "WR"],
-    ["Devonte Wyatt", "Georgia", "DT"],
-    ["Malik Willis", "Liberty", "QB"],
-    ["Kenny Pickett", "Pittsburgh", "QB"],
-    ["Daxton Hill", "Michigan", "S"],
-    ["George Karlaftis", "Purdue", "DE"],
-    ["Trevor Penning", "Northern Iowa", "OT"]
+    "Aidan Hutchinson",
+    "Ikem Ekwonu",
+    "Evan Neal",
+    "Kyle Hamilton",
+    "Ahmad Gardner",
+    "Garrett Wilson",
+    "Kayvon Thibodeaux",
+    "Travon Walker",
+    "Drake London",
+    "Jermaine Johnson II",
+    "Derek Stingley Jr.",
+    "Nakobe Dean",
+    "Devin Lloyd",
+    "Trent McDuffie",
+    "Charles Cross",
+    "Jordan Davis",
+    "Chris Olave",
+    "Tyler Linderbaum",
+    "Jameson Williams",
+    "Devonte Wyatt",
+    "Malik Willis",
+    "Kenny Pickett",
+    "Daxton Hill",
+    "George Karlaftis",
+    "Trevor Penning",
   ]
+
+  const updatePick = (picks, place, name) => {
+    return picks.map((pick, idx) => {
+      if (place === idx) {
+        return name
+      }
+      return pick
+    })
+  }
 
   const handleChange = (e) => {
     const { value } = e.target
     const arr = value.split(':')
-    const place = arr[0]
+    const place = parseInt(arr[0], 10)
     const name = arr[1]
-    console.log(place, name);
+    setPicks(updatePick(picks, place, name))
   }
  
   return (
@@ -62,7 +76,7 @@ export default function NFL() {
                       <select className="select select-bordered  w-full max-w-xs mb-3" onChange={handleChange}>
                         <option>#{i + 1}</option>
                         {options.map((o, idx) => (
-                          <option key={idx} value={`${i + 1}:${o[0]}`}>{o[0]}</option>
+                          <option key={idx} value={`${i}:${o}`}>{o}</option>
                         ))}
                       </select>
                     </li>
