@@ -64,8 +64,6 @@ export default function NFL() {
   }
 
   const handleSubmit = async () => {
-    setSubmitting(true)
-
     if (!draftName) {
       window.scrollTo({top: 0, left: 0, behavior: 'smooth' });
       setWarning('Draft name required')
@@ -78,6 +76,8 @@ export default function NFL() {
       setWarning('Each pick must be selected')
       return
     }
+
+    setSubmitting(true)
 
     const options = {
       method: 'PUT',
