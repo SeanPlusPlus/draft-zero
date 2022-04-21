@@ -2,9 +2,11 @@ import Link from 'next/link'
 
 const METAMASK_URL = 'https://metamask.app.link/dapp/draft-zero.vercel.app/'
 
+
 const MetaMask = () => {
   return (
     <div className="hero">
+      <code>ETHEREUM {window.ethereum ? 'yes' : 'no'}</code>
       <div className="hero-content text-center">
         <div className="max-w-md">
           <Link href={METAMASK_URL}>
