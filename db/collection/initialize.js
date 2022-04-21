@@ -18,6 +18,7 @@ const {
 
 const names = [
   'users',
+  'drafts'
 ]
 
 const history_days = null

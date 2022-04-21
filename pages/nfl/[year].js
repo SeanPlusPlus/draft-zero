@@ -96,7 +96,11 @@ export default function NFL() {
     const options = {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({picks, name: draftName})
+      body: JSON.stringify({
+        name: draftName,
+        picks,
+        account,
+      })
     }
     const res = await fetch(`/api/nfl/${year}`, options)
     const json = await res.json()
@@ -156,8 +160,7 @@ export default function NFL() {
                     </div>
                   ) : (
                     <button className="btn btn-secondary btn-outline" onClick={handleSubmit}>submit</button>
-                  )
-                  }
+                  )}
                 </div>
               </div>
             </div>
