@@ -15,7 +15,7 @@ const initialState = {
   provider: null,
   connection: null,
   imx: null,
-  picks: Array(32).fill(null),
+  picks: [],
 }
 
 export const GlobalContext = createContext(initialState);

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { GlobalContext } from '../context/GlobalState'
 
 // components
@@ -11,6 +11,10 @@ export default function NFL() {
     picks,
     setPicks,
   } = useContext(GlobalContext)
+
+  useEffect(() => {
+    setPicks(Array(32).fill(null))
+  }, [])
 
   const options = [
     "Aidan Hutchinson",
