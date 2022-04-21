@@ -5,6 +5,9 @@ import { GlobalContext } from '../context/GlobalState'
 import Header from '../components/header'
 import Nav from '../components/nav'
 
+// draft options
+import { options } from '../utils/nfl/2022/draft'
+
 export default function NFL() {
   const {
     // picks
@@ -15,34 +18,6 @@ export default function NFL() {
   useEffect(() => {
     setPicks(Array(32).fill(null))
   }, [])
-
-  const options = [
-    "Aidan Hutchinson",
-    "Ikem Ekwonu",
-    "Evan Neal",
-    "Kyle Hamilton",
-    "Ahmad Gardner",
-    "Garrett Wilson",
-    "Kayvon Thibodeaux",
-    "Travon Walker",
-    "Drake London",
-    "Jermaine Johnson II",
-    "Derek Stingley Jr.",
-    "Nakobe Dean",
-    "Devin Lloyd",
-    "Trent McDuffie",
-    "Charles Cross",
-    "Jordan Davis",
-    "Chris Olave",
-    "Tyler Linderbaum",
-    "Jameson Williams",
-    "Devonte Wyatt",
-    "Malik Willis",
-    "Kenny Pickett",
-    "Daxton Hill",
-    "George Karlaftis",
-    "Trevor Penning",
-  ]
 
   const updatePick = (picks, place, name) => {
     return picks.map((pick, idx) => {
