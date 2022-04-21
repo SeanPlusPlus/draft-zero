@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import {useRouter} from 'next/router'
+import Link from 'next/link'
 import { GlobalContext } from '../../context/GlobalState'
 
 // components
@@ -9,6 +10,16 @@ import Loading from '../../components/loading'
 
 // draft options
 import { draft } from '../../utils/nfl/draft'
+
+const Info = () => (
+  <div className="alert alert-info shadow-lg">
+    <div>
+      <span className="text-sm">
+        Optionally <Link href="/"><a className="link">connect your wallet</a></Link> and mint your draft
+      </span>
+    </div>
+  </div> 
+)
 
 export default function NFL() {
   const [warning, setWarning] = useState(null)
@@ -98,7 +109,8 @@ export default function NFL() {
         {options.length > 0 && (
           <div className="hero-content text-center">
             <div className="max-w-md">
-              <h1 className="text-5xl font-bold">NFL {year}</h1>
+              <Info />
+              <h1 className="text-5xl font-bold mt-5">NFL {year}</h1>
               <p className="py-6">
                 Predict the order for the {year} NFL Draft
               </p>
@@ -138,7 +150,7 @@ export default function NFL() {
                       <Loading />
                     </div>
                   ) : (
-                    <button className="btn btn-info" onClick={handleSubmit}>submit</button>
+                    <button className="btn btn-secondary btn-outline" onClick={handleSubmit}>submit</button>
                   )
                   }
                 </div>
