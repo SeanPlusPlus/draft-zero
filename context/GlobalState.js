@@ -19,6 +19,7 @@ const initialState = {
   connection: null,
   imx: null,
   picks: [],
+  options: [],
 }
 
 export const GlobalContext = createContext(initialState);
@@ -93,6 +94,13 @@ export const GlobalProvider = ({
     });
   }
 
+  function setOptions(data) {
+    dispatch({
+      type: 'UPDATE_OPTIONS',
+      payload: data
+    });
+  }
+
   useEffect(() => {
     log('state', 'rgb(217, 38, 169)', state);
   }, [state])
@@ -134,6 +142,10 @@ export const GlobalProvider = ({
         // picks 
         picks: state.picks,
         setPicks,
+
+        // options
+        options: state.options,
+        setOptions,
       }
     } > {
       children

@@ -52,6 +52,11 @@ export default (state, action) => {
         ...state,
         picks: action.payload,
       }
+    case 'UPDATE_OPTIONS':
+      return {
+        ...state,
+        options: action.payload,
+      }
     default:
       return state;
   }
