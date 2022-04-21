@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import {useRouter} from 'next/router'
 import { GlobalContext } from '../../context/GlobalState'
 
@@ -10,6 +10,7 @@ import Nav from '../../components/nav'
 import { draft } from '../../utils/nfl/draft'
 
 export default function NFL() {
+  const [warning, setWarning] = useState(null)
   const {
     // picks
     picks,
@@ -32,7 +33,7 @@ export default function NFL() {
   }, [year])
 
   useEffect(() => {
-    setPicks(Array(32).fill(null))
+    setPicks(Array(3).fill(null))
   }, [])
 
   const updatePick = (picks, place, name) => {
@@ -45,11 +46,22 @@ export default function NFL() {
   }
 
   const handleChange = (e) => {
+    e.preventDefault()
     const { value } = e.target
     const arr = value.split(':')
     const place = parseInt(arr[0], 10)
     const name = arr[1]
     setPicks(updatePick(picks, place, name))
+  }
+
+  const handleSubmit = () => {
+    window.scrollTo({top: 0, left: 0, behavior: 'smooth' });
+    console.log(picks);
+    const selected = picks.every((p) => (p !== null))
+    if (!selected) {
+      setWarning('Each pick must be selected')
+      return
+    }
   }
  
   return (
@@ -64,13 +76,23 @@ export default function NFL() {
               <p className="py-6">
                 Predict the order for the {year} NFL Draft
               </p>
+                {warning && (
+                  <div className="alert alert-warning shadow-lg mb-3">
+                    <div>
+                      <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                      <span>{warning}</span>
+                    </div>
+                  </div>
+                )}
               <div className="card md:w-96 bg-base-100 shadow-xl">
                 <div className="card-body">
                   <ul>
                     {picks.map((p, i) => (
                       <li key={i}>
                         <select className="select select-bordered  w-full max-w-xs mb-3" onChange={handleChange}>
-                          <option>#{i + 1}</option>
+                          {!picks[i] && (
+                            <option>#{i + 1}</option>
+                          )}
                           {options.map((o, idx) => (
                             <option key={idx} value={`${i}:${o}`}>{o}</option>
                           ))}
@@ -78,6 +100,7 @@ export default function NFL() {
                       </li>
                     ))}
                   </ul>
+                  <button className="btn btn-info" onClick={handleSubmit}>submit</button>
                 </div>
               </div>
             </div>
