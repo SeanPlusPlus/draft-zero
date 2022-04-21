@@ -54,7 +54,7 @@ export default function NFL() {
     setPicks(updatePick(picks, place, name))
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     window.scrollTo({top: 0, left: 0, behavior: 'smooth' });
     console.log(picks);
     const selected = picks.every((p) => (p !== null))
@@ -62,6 +62,16 @@ export default function NFL() {
       setWarning('Each pick must be selected')
       return
     }
+
+    const options = {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(picks)
+    }
+    const res = await fetch(`/api/nfl/${year}`, options)
+    const json = await res.json()
+
+    console.log('json', json);
   }
  
   return (
