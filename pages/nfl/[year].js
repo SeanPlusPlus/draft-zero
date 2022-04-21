@@ -12,7 +12,7 @@ import Loading from '../../components/loading'
 import { draft } from '../../utils/nfl/draft'
 
 const Info = () => (
-  <div className="alert alert-info shadow-lg">
+  <div className="alert alert-info shadow-lg mb-5">
     <div>
       <span className="text-sm">
         Optionally <Link href="/"><a className="link">connect your wallet</a></Link> and mint your draft
@@ -34,6 +34,9 @@ export default function NFL() {
     // options 
     options,
     setOptions,
+
+    // account
+    account
   } = useContext(GlobalContext)
 
   const router = useRouter()
@@ -109,8 +112,10 @@ export default function NFL() {
         {options.length > 0 && (
           <div className="hero-content text-center">
             <div className="max-w-md">
-              <Info />
-              <h1 className="text-5xl font-bold mt-5">NFL {year}</h1>
+              {!account && (
+                <Info />
+              )}
+              <h1 className="text-5xl font-bold">NFL {year}</h1>
               <p className="py-6">
                 Predict the order for the {year} NFL Draft
               </p>
