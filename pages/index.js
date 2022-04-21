@@ -11,7 +11,7 @@ const { NODE_ENV } = process.env;
 const isProd = NODE_ENV === 'production';
 
 export default function App() {
-  if (isMobile && !isProd) {
+  if (isMobile && isProd) {
     return (
       <div className="min-h-screen grid-bg">
         <Header />
