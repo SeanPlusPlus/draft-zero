@@ -1,5 +1,5 @@
-export const draft = {
-  "_2022": [
+export const data = {
+  "nfl-2022": [
     "Abraham Lucas",
     "Ahmad Gardner",
     "Aidan Hutchinson",

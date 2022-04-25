@@ -8,12 +8,6 @@ import Header from '../../components/header'
 import Nav from '../../components/nav'
 import Loading from '../../components/loading'
 
-// draft options
-import { draft } from '../../utils/nfl/draft'
-
-// total picks
-const TOTAL = 3
-
 const Info = () => (
   <div className="alert alert-info shadow-lg mb-5">
     <div>
@@ -26,8 +20,9 @@ const Info = () => (
 
 export default function NFL() {
   const [ modal, setModal ] = useState('')
+  const [ description, setDescription ] = useState('')
   const [ warning, setWarning ] = useState(null)
-  const [ draftName, setDraftName ] = useState(null)
+  const [ draftUserName, setDraftName ] = useState(null)
   const [ submitting, setSubmitting ] = useState(null)
  
   const {
@@ -44,19 +39,20 @@ export default function NFL() {
   } = useContext(GlobalContext)
 
   const router = useRouter()
-  const { query: { year }} = router
+  const { query: { draft_name }} = router
 
   useEffect(() => {
-    const key = `_${year}`
-    const data = draft[key]
-    if (data) {
-      setOptions(data)
+    async function fetchData() {
+      const res = await fetch(`/api/draft/${draft_name}`)
+      const json = await res.json()
+      setOptions(json.options)
+      setPicks(Array(json.total_picks).fill(null))
+      setDescription(json.description)
     }
-  }, [year])
-
-  useEffect(() => {
-    setPicks(Array(TOTAL).fill(null))
-  }, [])
+    if (draft_name) {
+      fetchData()
+    }
+  }, [draft_name])
 
   const updatePick = (picks, place, name) => {
     return picks.map((pick, idx) => {
@@ -82,7 +78,7 @@ export default function NFL() {
   }
 
   const handleSubmit = async () => {
-    if (!draftName) {
+    if (!draftUserName) {
       window.scrollTo({top: 0, left: 0, behavior: 'smooth' });
       setWarning('Draft name required')
       return
@@ -101,12 +97,13 @@ export default function NFL() {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        name: draftName,
+        draft_name,
+        name: draftUserName,
         picks,
         account,
       })
     }
-    const res = await fetch(`/api/entry/${year}`, options)
+    const res = await fetch(`/api/entry/${draft_name}`, options)
     const json = await res.json()
     console.log('json', json);
     setModal('modal-open')
@@ -123,9 +120,9 @@ export default function NFL() {
               {!account && (
                 <Info />
               )}
-              <h1 className="text-4xl font-bold">NFL {year}</h1>
+              <h1 className="text-4xl font-bold">{description}</h1>
               <p className="py-6">
-                Predict the order for the {year} NFL Draft
+                Predict the order for the {description}
               </p>
               {warning && (
                 <div className="alert alert-warning shadow-lg mb-3">
@@ -153,7 +150,7 @@ export default function NFL() {
                       </li>
                     ))}
                   </ul>
-                  {(warning && !draftName) ? (
+                  {(warning && !draftUserName) ? (
                     <input type="text" placeholder="Name" onChange={handleName} className="input input-bordered input-warning w-full max-w-xs" />
                   ) : (
                     <input type="text" placeholder="Name" onChange={handleName} className="input input-bordered w-full max-w-xs" disabled={submitting} />
@@ -180,13 +177,13 @@ export default function NFL() {
             </span>
           </h3>
           <p className="pt-4">
-            <code>{draftName}</code>
+            <code>{draftUserName}</code>
           </p>
           <p className="pt-4">
             Your draft prediction was received
           </p>
           <div className="modal-action pt-5">
-            <Link href={`/nfl/leaderboard/${year}`}>
+            <Link href={`/leaderboard/${draft_name}`}>
               <a className="btn">
                 Visit the leaderbaord
               </a>

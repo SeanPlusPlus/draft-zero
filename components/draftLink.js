@@ -2,7 +2,7 @@ import Link from 'next/link'
 import React, { useContext } from 'react'
 import { GlobalContext } from '../context/GlobalState'
 
-const year = '2022'
+const draft_name = 'nfl-2022'
 
 const DraftLink = () => {
   const { imx } = useContext(GlobalContext)
@@ -15,8 +15,8 @@ const DraftLink = () => {
   
   return (
     <div className="mt-6">
-      <Link href={`/nfl/${year}`}>
-        <a className="btn btn-secondary">Build your NFL {year} Draft</a>
+      <Link href={draft_name}>
+        <a className="btn btn-secondary">Build your {draft_name} Draft</a>
       </Link>
     </div>
   )

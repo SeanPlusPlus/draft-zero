@@ -12,6 +12,11 @@ const client = new faunadb.Client({
 })
 
 const {
+  Get,
+  Ref,
+  Select,
+  Match,
+  Index,
   Collection,
   Map,
   Paginate,
@@ -19,21 +24,30 @@ const {
   Lambda,
 } = q
 
-async function getDraft(year, category) {
+async function getDraft(name) {
+  const index = 'drafts_by_name'
+  const item = await client.query(
+    Select([0],
+      Paginate(
+        Match(
+          Index(index),
+          name
+        )
+      )
+    )
+  )
+  const ref = item[1].value.id
   const collection = 'drafts'
-  const drafts = await client.query(
-    Map(
-      Paginate(Documents(Collection(collection))),
-      Lambda(x => q.Get(x))
+  const draft = await client.query(
+    Get(
+      Ref(
+        Collection(collection),
+        ref
+      )
     )
   )
 
-  return drafts.data
-    .filter((d) => (d.data.year === year && d.data.category === category ))
-    .map((d) => ({
-      id: d.ref.id,
-      ...d.data
-    }))[0]
+  return draft.data
 }
 
 async function getEntries() {
@@ -52,9 +66,11 @@ async function getEntries() {
 }
 
 export default async function leaderboard(req, res) {
-  const { query: { year, category } } = req
-  const draft = await getDraft(year, category.toUpperCase())
-  const entries = await getEntries()
+  const {
+    query: { draft_name },
+  } = req
+  const draft = await getDraft(draft_name)
+  const entries = await getEntries(draft_name)
   const leaderboard = {
     draft,
     entries,

@@ -18,7 +18,7 @@ const {
 
 export default async function nfl(req, res) {
   const {
-    query: { year },
+    query: { draft_name },
   } = req
 
   const { picks, name, account } = req.body
@@ -34,8 +34,7 @@ export default async function nfl(req, res) {
   }
 
   const new_draft = {
-    category: 'NFL',
-    year,
+    draft_name,
     picks,
     name,
     account,
@@ -49,11 +48,10 @@ export default async function nfl(req, res) {
     )
   )
 
-  const id = user.ref.id
+  const user_id = user.ref.id
 
   res.status(200).json({
-    id,
-    year,
+    user_id,
     name,
     picks,
     account,
