@@ -159,11 +159,11 @@ export default function NFL() {
                     <input type="text" placeholder="Name" onChange={handleName} className="input input-bordered w-full max-w-xs" disabled={submitting} />
                   ) }
                   {submitting ? (
-                    <div className="mt-3">
+                    <div className="mt-7">
                       <Loading />
                     </div>
                   ) : (
-                    <button className="btn btn-secondary btn-outline" onClick={handleSubmit}>submit</button>
+                    <button className="btn btn-secondary btn-outline mt-4" onClick={handleSubmit}>submit</button>
                   )}
                 </div>
               </div>
