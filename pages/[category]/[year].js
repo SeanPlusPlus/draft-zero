@@ -11,6 +11,9 @@ import Loading from '../../components/loading'
 // draft options
 import { draft } from '../../utils/nfl/draft'
 
+// total picks
+const TOTAL = 3
+
 const Info = () => (
   <div className="alert alert-info shadow-lg mb-5">
     <div>
@@ -52,7 +55,7 @@ export default function NFL() {
   }, [year])
 
   useEffect(() => {
-    setPicks(Array(1).fill(null))
+    setPicks(Array(TOTAL).fill(null))
   }, [])
 
   const updatePick = (picks, place, name) => {
@@ -103,7 +106,7 @@ export default function NFL() {
         account,
       })
     }
-    const res = await fetch(`/api/nfl/${year}`, options)
+    const res = await fetch(`/api/entry/${year}`, options)
     const json = await res.json()
     console.log('json', json);
     setModal('modal-open')

@@ -17,9 +17,9 @@ const {
 
 
 const names = [
-  'users',
-  'drafts',
-  'picks'
+  // 'users',
+  // 'entries',
+  // 'drafts'
 ]
 
 const history_days = null

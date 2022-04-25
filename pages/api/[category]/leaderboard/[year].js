@@ -19,7 +19,7 @@ const {
   Lambda,
 } = q
 
-async function getEntries() {
+async function getDraft(year, category) {
   const collection = 'drafts'
   const drafts = await client.query(
     Map(
@@ -28,14 +28,16 @@ async function getEntries() {
     )
   )
 
-  return drafts.data.map((d) => ({
-    id: d.ref.id,
-    ...d.data
-  }))
+  return drafts.data
+    .filter((d) => (d.data.year === year && d.data.category === category ))
+    .map((d) => ({
+      id: d.ref.id,
+      ...d.data
+    }))[0]
 }
 
-async function getPicks() {
-  const collection = 'picks'
+async function getEntries() {
+  const collection = 'entries'
   const picks = await client.query(
     Map(
       Paginate(Documents(Collection(collection))),
@@ -50,10 +52,11 @@ async function getPicks() {
 }
 
 export default async function leaderboard(req, res) {
-  const picks = await getPicks()
+  const { query: { year, category } } = req
+  const draft = await getDraft(year, category.toUpperCase())
   const entries = await getEntries()
   const leaderboard = {
-    ...picks[0],
+    draft,
     entries,
   }
 

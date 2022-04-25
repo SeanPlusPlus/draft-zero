@@ -41,7 +41,7 @@ export default async function nfl(req, res) {
     account,
   }
  
-  const collection = 'drafts'
+  const collection = 'entries'
   const user = await client.query(
     Create(
       Collection(collection),
