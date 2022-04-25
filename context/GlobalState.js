@@ -20,7 +20,7 @@ const initialState = {
   imx: null,
   picks: [],
   options: [],
-  leaderboard: {},
+  leaderboard: { draft: { items: [] } },
 }
 
 export const GlobalContext = createContext(initialState);
