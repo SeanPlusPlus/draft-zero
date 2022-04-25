@@ -20,7 +20,14 @@ export default function Leaderboard() {
     async function fetchData() {
       const res = await fetch(`/api/${category}/leaderboard/${year}`)
       const json = await res.json()
-      setLeaderboard(json)
+      const { draft: {
+        items,
+      }} = json
+      const reversed = items.reverse()
+      setLeaderboard({
+        items: reversed,
+        ...json
+      })
     }
     if (category && year) {
       fetchData()
@@ -35,11 +42,11 @@ export default function Leaderboard() {
         <div className="hero-content text-center">
           <div className="max-w-md">
             <h1 className="text-4xl font-bold">{category && category.toUpperCase()} {year} Leaderboard</h1>
-              {leaderboard.draft.items.map((i, idx) => (
-                <div className="card md:w-96 bg-base-100 shadow-xl mt-3">
+              {leaderboard.items.map((i, idx) => (
+                <div key={idx} className="card md:w-96 bg-base-100 shadow-xl mt-3">
                   <div className="card-body">
                     <h2 className="card-title">
-                      #{idx + 1} {i}
+                      #{leaderboard.items.length - idx} {i}
                     </h2>
                   </div>
                 </div>
