@@ -1,11 +1,34 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { GlobalContext } from '../../context/GlobalState'
+import _orderBy from 'lodash/orderBy'
 
 // components
 import Header from '../../components/header'
 import Nav from '../../components/nav'
 import Loading from '../../components/loading'
+
+const sorted = (entries, i) => {
+  console.log(entries);
+  return entries
+
+  // return _orderBy(entries.map((entry) => {
+  //   const current = entry.scores[i].score
+  //   return {
+  //     ...entry,
+  //     current
+  //   }
+  // }), ['current'], ['asc'])
+}
+
+const getScores = (entry, idx) => {
+  console.log(entry);
+  return 3
+  
+  // const { scores } = entry 
+  // const { score, floor, ceiling } = scores[idx]
+  // return score
+}
 
 export default function Leaderboard() {
   const [ fetching, setFetching ] = useState(true)
@@ -63,19 +86,15 @@ export default function Leaderboard() {
                     <div className="overflow-x-auto">
                       <table className="table w-full">
                         <tbody>
-
-                          {leaderboard.entries.map((e, index) => (
-                            <tr key={index}>
-                              <th>{index + 1}</th>
-                              <td>{e.name}</td>
-                              <td>5</td>
-                              <td>
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 11l7-7 7 7M5 19l7-7 7 7" />
-                                </svg>
-                              </td>
-                            </tr>
-                          ))}
+                          {
+                            sorted(leaderboard.entries, idx).map((entry, index) => (
+                              <tr key={entry.name}>
+                                <th>{index + 1}</th>
+                                <td>{entry.name}</td>
+                                <td>{getScores(entry, idx)}</td>
+                              </tr>
+                            ))
+                          }
                         </tbody>
                       </table>
                     </div>

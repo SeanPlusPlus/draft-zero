@@ -52,16 +52,18 @@ async function getDraft(name) {
 
 async function getEntries() {
   const collection = 'entries'
-  const picks = await client.query(
+  const entries = await client.query(
     Map(
       Paginate(Documents(Collection(collection))),
       Lambda(x => q.Get(x))
     )
   )
 
-  return picks.data.map((p) => ({
-    id: p.ref.id,
-    ...p.data
+  return entries.data.map((e) => ({
+    id: e.ref.id,
+    ...e.data,
+    score: 0,
+    scores: []
   }))
 }
 
