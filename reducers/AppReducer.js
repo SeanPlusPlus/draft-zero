@@ -57,6 +57,11 @@ export default (state, action) => {
         ...state,
         options: action.payload,
       }
+    case 'UPDATE_LEADERBOARD':
+      return {
+        ...state,
+        leaderboard: action.payload,
+      }
     default:
       return state;
   }

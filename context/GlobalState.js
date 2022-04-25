@@ -20,6 +20,7 @@ const initialState = {
   imx: null,
   picks: [],
   options: [],
+  leaderboard: {},
 }
 
 export const GlobalContext = createContext(initialState);
@@ -101,6 +102,13 @@ export const GlobalProvider = ({
     });
   }
 
+  function setLeaderboard(data) {
+    dispatch({
+      type: 'UPDATE_LEADERBOARD',
+      payload: data
+    });
+  }
+
   useEffect(() => {
     log('state', 'rgb(217, 38, 169)', state);
   }, [state])
@@ -146,6 +154,10 @@ export const GlobalProvider = ({
         // options
         options: state.options,
         setOptions,
+
+        // leaderboard 
+        leaderboard: state.leaderboard,
+        setLeaderboard,
       }
     } > {
       children
