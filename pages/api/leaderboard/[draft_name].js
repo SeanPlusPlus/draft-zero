@@ -62,10 +62,11 @@ async function getEntries(name, draft) {
   )
 
   const { items } = draft
-  const names = items.map((name) => ({name}))
+  const drafted = items.map((name) => ({name}))
 
   return entries.data.map((e) => {
-    const result = scores(names, e.data.picks.map((name) => ({name})), PENALTY)
+    const entry = e.data.picks.map((name) => ({name})) 
+    const result = scores(entry, drafted, PENALTY)
     const total = result.reduce((a, b) => ({ score: a.score + b.score }))
     const { score } = total
 

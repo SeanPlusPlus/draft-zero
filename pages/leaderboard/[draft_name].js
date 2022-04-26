@@ -74,7 +74,7 @@ export default function Leaderboard() {
                 <div key={idx} className="card md:w-96 bg-base-100 shadow-xl mt-3">
                   <div className="card-body">
                     <h2 className="card-title border-b-2">
-                      #{leaderboard.items.length - idx} {i}
+                      #{idx + 1} {i}
                     </h2>
                     <div className="overflow-x-auto">
                       <table className="table w-full">
