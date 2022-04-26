@@ -74,7 +74,7 @@ export default function Demo() {
                   {entry.name}: {entry.score}
                   <ol>
                     {entry.items.map((i) => (
-                      <li key={i.name} className="list-disc ml-6">{i.name}</li>
+                      <li key={i.name} className="list-decimal ml-6">{i.name}</li>
                     ))}
                   </ol>
                 </li>
