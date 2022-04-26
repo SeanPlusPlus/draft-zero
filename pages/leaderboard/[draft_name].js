@@ -22,7 +22,6 @@ const sorted = (entries, i) => {
 }
 
 const getScores = (entry, idx) => {
-  console.log(entry);
   return 3
   
   // const { scores } = entry 

@@ -50,7 +50,7 @@ async function getDraft(name) {
   return draft.data
 }
 
-async function getEntries() {
+async function getEntries(name, draft) {
   const collection = 'entries'
   const entries = await client.query(
     Map(
@@ -59,11 +59,13 @@ async function getEntries() {
     )
   )
 
+  const { items } = draft
+
   return entries.data.map((e) => ({
     id: e.ref.id,
     ...e.data,
     score: 0,
-    scores: []
+    scores: items//items.map((i) => i)
   }))
 }
 
@@ -72,7 +74,7 @@ export default async function leaderboard(req, res) {
     query: { draft_name },
   } = req
   const draft = await getDraft(draft_name)
-  const entries = await getEntries(draft_name)
+  const entries = await getEntries(draft_name, draft)
   const leaderboard = {
     draft,
     entries,

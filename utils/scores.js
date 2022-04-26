@@ -25,8 +25,6 @@ const scores = (entry, drafted) => {
         item,
         position,
         score: score,
-        floor: null,   // TODO
-        ceiling: null, // TODO
       }
     )
   })

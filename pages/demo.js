@@ -28,6 +28,8 @@ export default function Demo() {
     const url = API_BASE + 'demo'
     const result = await axios(url);
 
+    console.log('*', result.data);
+
     setData(result.data);
   }, []);
 
