@@ -17,7 +17,7 @@ const sorted = (entries, i) => {
 
 const getScores = (entry, idx) => {
   const { scores } = entry 
-  const { score, floor, ceiling } = scores[idx]
+  const { score } = scores[idx]
   return score
 }
 

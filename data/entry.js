@@ -7,13 +7,13 @@ const picks = 5
 const entry = (items, drafted) => {
   const entries = [
     {
-      name: 'Ben',
+      name: 'Alice',
     },
     {
-      name: 'Ryan',
+      name: 'Bob',
     },
     {
-      name: 'Sean',
+      name: 'Charlie',
     }
   ]
   const submissions = entries.map((submission) => {
