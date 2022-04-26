@@ -21,11 +21,8 @@ const sorted = (entries, i) => {
 
 const getScores = (entry, idx) => {
   const { scores } = entry 
-  if (scores && scores[idx]) {
-    const { score } = scores[idx]
-    return score
-  }
-  return 0
+  const { score } = scores[idx]
+  return score
 }
 
 export default function Leaderboard() {
@@ -82,7 +79,7 @@ export default function Leaderboard() {
     <div className="min-h-screen grid-bg">
       <Header />
       <Nav />
-      <div className="hero">
+      <div className="hero md:px-20 lg:px-60">
         <div className="hero-content text-center">
           <div className="">
             <h1 className="text-4xl font-bold">Leaderboard</h1>
@@ -117,9 +114,9 @@ export default function Leaderboard() {
                         <table className="table w-full">
                           <tbody>
                             {
-                              sorted(leaderboard.entries, index).map((entry, index) => (
+                              sorted(leaderboard.entries, index).map((entry, i) => (
                                 <tr key={entry.name}>
-                                  <th>{index + 1}</th>
+                                  <th>{i + 1}</th>
                                   <td>
                                     <div className="link link-info" id={entry.id} onClick={handleModal}>
                                       {entry.name}
