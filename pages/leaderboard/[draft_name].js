@@ -29,7 +29,7 @@ export default function Leaderboard() {
   const [ index, setIndex ] = useState(null)
   const [ items, setItems] = useState([])
   const [ modal, setModal ] = useState('')
-  const [ entry, setEntry] = useState({})
+  const [ entry, setEntry] = useState({ picks: [], scores: [] })
   const [ fetching, setFetching ] = useState(true)
   const [ description, setDescription ] = useState('')
   const router = useRouter()
