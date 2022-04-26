@@ -84,7 +84,7 @@ export default function Leaderboard() {
       <Nav />
       <div className="hero">
         <div className="hero-content text-center">
-          <div className="max-w-md">
+          <div className="">
             <h1 className="text-4xl font-bold">Leaderboard</h1>
             <h3 className="text-2xl font-bold">{description}</h3>
             {fetching ? (
@@ -93,7 +93,7 @@ export default function Leaderboard() {
               </div>
             ) : (
               <>
-                <div className="card md:w-96 bg-base-100 shadow-xl mt-3">
+                <div className="card bg-base-100 shadow-xl mt-3">
                   <div className="card-body">
                     <div className="flex flex-wrap">
                       {leaderboard && leaderboard.draft && leaderboard.draft.total_picks && Array(leaderboard.draft.total_picks).fill().map((x, idx) => (
@@ -108,7 +108,7 @@ export default function Leaderboard() {
                 </div>
 
                 {items && items[index] && (
-                  <div className="card md:w-96 bg-base-100 shadow-xl mt-3">
+                  <div className="card bg-base-100 shadow-xl mt-3">
                     <div className="card-body">
                       <h2 className="card-title border-b-2">
                         #{index + 1} {items[index]}
