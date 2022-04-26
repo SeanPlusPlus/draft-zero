@@ -1,21 +1,17 @@
 import Link from 'next/link'
-import React, { useContext } from 'react'
-import { GlobalContext } from '../context/GlobalState'
 
-const featured ={
+const featured = {
+  active: true,
   description: 'NFL 2022',
   draft_link: '/draft/nfl-2022',
   leaderboard_link: '/leaderboard/nfl-2022',
 }
-const DraftLink = () => {
-  const { imx } = useContext(GlobalContext)
 
-  // if (!imx) {
-  //   return (
-  //     <></>
-  //   )
-  // }
-  
+const DraftLink = () => {
+  if (!featured.active) {
+    return <></>
+  }
+ 
   return (
     <div className="mt-6">
       <div className="card md:w-96 bg-base-100 shadow-xl">
