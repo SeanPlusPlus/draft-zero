@@ -20,4 +20,4 @@ There is an optional feature to mint and NFT using [Immutable X](https://github.
 
 #### L1 Smart contract
 
-https://ropsten.etherscan.io/address/0x6374Cf951E9793A31DcaCE045B985d91269718Ee
+https://ropsten.etherscan.io/address/0xaa89AB4Dbf33885161499742577914bbeBf6a896
