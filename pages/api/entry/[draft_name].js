@@ -42,19 +42,19 @@ export default async function nfl(req, res) {
   }
  
   const collection = 'entries'
-  const user = await client.query(
+  const draft = await client.query(
     Create(
       Collection(collection),
       { data: new_draft }
     )
   )
 
-  const user_id = user.ref.id
+  const draft_id = draft.ref.id
  
   if (account) {
-    const minted = await mint(account)
+    const minted = await mint(account, draft_id)
     res.status(200).json({
-      user_id,
+      draft_id,
       name,
       picks,
       account,

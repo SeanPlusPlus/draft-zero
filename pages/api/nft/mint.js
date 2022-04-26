@@ -20,7 +20,7 @@ const chains = {
   },
 };
 
-async function mint(etherKey) {
+async function mint(etherKey, id) {
   const { apiKey } = chains.ropsten
 
   const provider = new ethers.providers.AlchemyProvider('ropsten', apiKey);
@@ -37,8 +37,6 @@ async function mint(etherKey) {
   });
 
   try {
-
-    const { id } = req.query
     const payload = [
       {
         contractAddress: CONTRACT_ADDRESS,
@@ -57,6 +55,8 @@ async function mint(etherKey) {
         ],
       },
     ];
+
+    console.log('payload', payload);
 
     const minted = await minter.mintV2(payload);
     return minted

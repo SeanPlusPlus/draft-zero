@@ -21,8 +21,11 @@ const sorted = (entries, i) => {
 
 const getScores = (entry, idx) => {
   const { scores } = entry 
-  const { score } = scores[idx]
-  return score
+  if (scores && scores[idx]) {
+    const { score } = scores[idx]
+    return score
+  }
+  return 0
 }
 
 export default function Leaderboard() {
