@@ -60,12 +60,13 @@ async function getEntries(name, draft) {
   )
 
   const { items } = draft
+  const names = items.map((name) => ({name}))
 
   return entries.data.map((e) => ({
     id: e.ref.id,
     ...e.data,
     score: 0,
-    scores: items//items.map((i) => i)
+    scores: names
   }))
 }
 
