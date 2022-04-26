@@ -70,30 +70,42 @@ export default function Leaderboard() {
                 <Loading />
               </div>
             )}
-              {leaderboard.items.map((i, idx) => (
-                <div key={idx} className="card md:w-96 bg-base-100 shadow-xl mt-3">
-                  <div className="card-body">
-                    <h2 className="card-title border-b-2">
-                      #{idx + 1} {i}
-                    </h2>
-                    <div className="overflow-x-auto">
-                      <table className="table w-full">
-                        <tbody>
-                          {
-                            sorted(leaderboard.entries, idx).map((entry, index) => (
-                              <tr key={entry.name}>
-                                <th>{index + 1}</th>
-                                <td>{entry.name}</td>
-                                <td>{getScores(entry, idx)}</td>
-                              </tr>
-                            ))
-                          }
-                        </tbody>
-                      </table>
+            <div className="card md:w-96 bg-base-100 shadow-xl mt-3">
+              <div className="card-body">
+                <div className="flex">
+                  {leaderboard.items.map((i, idx) => (
+                    <div key={idx} className="flex-none">
+                      {idx + 1}
                     </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {leaderboard.items[leaderboard.items.length - 1] && (
+              <div className="card md:w-96 bg-base-100 shadow-xl mt-3">
+                <div className="card-body">
+                  <h2 className="card-title border-b-2">
+                    #{leaderboard.items.length} {leaderboard.items[leaderboard.items.length - 1]}
+                  </h2>
+                  <div className="overflow-x-auto">
+                    <table className="table w-full">
+                      <tbody>
+                        {
+                          sorted(leaderboard.entries, leaderboard.items.length - 1).map((entry, index) => (
+                            <tr key={entry.name}>
+                              <th>{index + 1}</th>
+                              <td>{entry.name}</td>
+                              <td>{getScores(entry, leaderboard.items.length - 1)}</td>
+                            </tr>
+                          ))
+                        }
+                      </tbody>
+                    </table>
                   </div>
                 </div>
-              ))}
+              </div>
+            )}
           </div>
         </div>
       </div>
