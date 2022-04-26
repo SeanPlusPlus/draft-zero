@@ -1,4 +1,5 @@
 import faunadb from 'faunadb'
+import scores from '../../../utils/scores'
 
 require('dotenv').config()
 
@@ -51,6 +52,7 @@ async function getDraft(name) {
 }
 
 async function getEntries(name, draft) {
+  const PENALTY = 50
   const collection = 'entries'
   const entries = await client.query(
     Map(
@@ -62,12 +64,18 @@ async function getEntries(name, draft) {
   const { items } = draft
   const names = items.map((name) => ({name}))
 
-  return entries.data.map((e) => ({
-    id: e.ref.id,
-    ...e.data,
-    score: 0,
-    scores: names
-  }))
+  return entries.data.map((e) => {
+    const result = scores(names, e.data.picks.map((name) => ({name})), PENALTY)
+    const total = result.reduce((a, b) => ({ score: a.score + b.score }))
+    const { score } = total
+
+    return ({
+      id: e.ref.id,
+      ...e.data,
+      score,
+      scores: result,
+    })
+  })
 }
 
 export default async function leaderboard(req, res) {
