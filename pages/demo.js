@@ -51,7 +51,7 @@ export default function Demo() {
             <h3 className="text-3xl mt-5">Draft</h3>
             <ol>
               {data.draft.map((item, idx) => (
-                <li className="list-disc ml-6" key={item.name}>
+                <li className="list-decimal ml-6" key={item.name}>
                   {item.name}
                   <ul>
                     {
