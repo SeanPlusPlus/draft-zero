@@ -65,46 +65,51 @@ export default function Leaderboard() {
           <div className="max-w-md">
             <h1 className="text-4xl font-bold">Leaderboard</h1>
             <h3 className="text-2xl font-bold">{description}</h3>
-            {fetching && (
+            {fetching ? (
               <div className="mt-3">
                 <Loading />
               </div>
-            )}
-            <div className="card md:w-96 bg-base-100 shadow-xl mt-3">
-              <div className="card-body">
-                <div className="flex">
-                  {leaderboard.items.map((i, idx) => (
-                    <div key={idx} className="flex-none">
-                      {idx + 1}
+            ) : (
+              <>
+                <div className="card md:w-96 bg-base-100 shadow-xl mt-3">
+                  <div className="card-body">
+                    <div className="flex flex-wrap">
+                      {leaderboard && leaderboard.draft && leaderboard.draft.total_picks && Array(leaderboard.draft.total_picks).fill().map((x, idx) => (
+                        <div key={idx}>
+                          <button className="btn btn-xs mx-1 my-1 w-8" disabled={idx > (leaderboard.items.length - 1)}>
+                            {idx + 1}
+                          </button>
+                        </div>
+                      ))}
                     </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {leaderboard.items[leaderboard.items.length - 1] && (
-              <div className="card md:w-96 bg-base-100 shadow-xl mt-3">
-                <div className="card-body">
-                  <h2 className="card-title border-b-2">
-                    #{leaderboard.items.length} {leaderboard.items[leaderboard.items.length - 1]}
-                  </h2>
-                  <div className="overflow-x-auto">
-                    <table className="table w-full">
-                      <tbody>
-                        {
-                          sorted(leaderboard.entries, leaderboard.items.length - 1).map((entry, index) => (
-                            <tr key={entry.name}>
-                              <th>{index + 1}</th>
-                              <td>{entry.name}</td>
-                              <td>{getScores(entry, leaderboard.items.length - 1)}</td>
-                            </tr>
-                          ))
-                        }
-                      </tbody>
-                    </table>
                   </div>
                 </div>
-              </div>
+
+                {leaderboard.items[leaderboard.items.length - 1] && (
+                  <div className="card md:w-96 bg-base-100 shadow-xl mt-3">
+                    <div className="card-body">
+                      <h2 className="card-title border-b-2">
+                        #{leaderboard.items.length} {leaderboard.items[leaderboard.items.length - 1]}
+                      </h2>
+                      <div className="overflow-x-auto">
+                        <table className="table w-full">
+                          <tbody>
+                            {
+                              sorted(leaderboard.entries, leaderboard.items.length - 1).map((entry, index) => (
+                                <tr key={entry.name}>
+                                  <th>{index + 1}</th>
+                                  <td>{entry.name}</td>
+                                  <td>{getScores(entry, leaderboard.items.length - 1)}</td>
+                                </tr>
+                              ))
+                            }
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </>
             )}
           </div>
         </div>
