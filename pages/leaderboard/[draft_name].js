@@ -9,7 +9,6 @@ import Nav from '../../components/nav'
 import Loading from '../../components/loading'
 
 const sorted = (entries, i) => {
-  console.log(entries);
   return _orderBy(entries.map((entry) => {
     const current = entry.score
     return {
@@ -28,6 +27,7 @@ const getScores = (entry, idx) => {
 export default function Leaderboard() {
   const [ index, setIndex ] = useState(null)
   const [ items, setItems] = useState([])
+  const [ modal, setModal ] = useState('')
   const [ fetching, setFetching ] = useState(true)
   const [ description, setDescription ] = useState('')
   const router = useRouter()
@@ -60,6 +60,14 @@ export default function Leaderboard() {
       fetchData()
     }
   }, [draft_name])
+
+  const handleModal = () => {
+    setModal('modal-open')
+  }
+
+  const handleClose = () => {
+    setModal('')
+  }
  
   return (
     <div className="min-h-screen grid-bg">
@@ -103,7 +111,11 @@ export default function Leaderboard() {
                               sorted(leaderboard.entries, index).map((entry, index) => (
                                 <tr key={entry.name}>
                                   <th>{index + 1}</th>
-                                  <td>{entry.name}</td>
+                                  <td>
+                                    <div className="link link-info" onClick={handleModal}>
+                                      {entry.name}
+                                    </div>
+                                  </td>
                                   <td>{getScores(entry, index)}</td>
                                   <td><code className="font-bold bg-black p-1 text-slate-200 rounded-md">{entry.score}</code></td>
                                 </tr>
@@ -120,6 +132,22 @@ export default function Leaderboard() {
           </div>
         </div>
       </div>
+
+      <div className={`modal ${modal}`}>
+        <div className="modal-box">
+          <h3 className="font-bold text-xl flex">
+            <span className="ml-1 text-xl mb-4">
+              Hello
+            </span>
+          </h3>
+          <div className="modal-action pt-5">
+            <label htmlFor="my-modal" className="btn" onClick={handleClose}>Close</label>
+          </div>
+        </div>
+      </div>
+      
+
+
     </div>
   )
 }
