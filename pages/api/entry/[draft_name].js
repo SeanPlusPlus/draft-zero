@@ -1,4 +1,5 @@
 import faunadb from 'faunadb'
+import mint from '../nft/mint'
 
 require('dotenv').config()
 
@@ -49,11 +50,25 @@ export default async function nfl(req, res) {
   )
 
   const user_id = user.ref.id
+ 
+  if (account) {
+    const minted = await mint(account)
+    res.status(200).json({
+      user_id,
+      name,
+      picks,
+      account,
+      minted,
+    })
+    return
+  } else {
+    res.status(200).json({
+      user_id,
+      name,
+      picks,
+    })
+    return
+  }
 
-  res.status(200).json({
-    user_id,
-    name,
-    picks,
-    account,
-  })
+
 }
