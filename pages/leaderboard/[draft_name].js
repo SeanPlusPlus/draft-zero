@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { GlobalContext } from '../../context/GlobalState'
 import _orderBy from 'lodash/orderBy'
+import _find from 'lodash/find'
 
 // components
 import Header from '../../components/header'
@@ -28,6 +29,7 @@ export default function Leaderboard() {
   const [ index, setIndex ] = useState(null)
   const [ items, setItems] = useState([])
   const [ modal, setModal ] = useState('')
+  const [ entry, setEntry] = useState({})
   const [ fetching, setFetching ] = useState(true)
   const [ description, setDescription ] = useState('')
   const router = useRouter()
@@ -61,8 +63,12 @@ export default function Leaderboard() {
     }
   }, [draft_name])
 
-  const handleModal = () => {
+  const handleModal = (e) => {
+    const { target: { id }} = e
+    const entry = _find(leaderboard.entries, (item) => { return item.id === id })
+    
     setModal('modal-open')
+    setEntry(entry)
   }
 
   const handleClose = () => {
@@ -112,7 +118,7 @@ export default function Leaderboard() {
                                 <tr key={entry.name}>
                                   <th>{index + 1}</th>
                                   <td>
-                                    <div className="link link-info" onClick={handleModal}>
+                                    <div className="link link-info" id={entry.id} onClick={handleModal}>
                                       {entry.name}
                                     </div>
                                   </td>
@@ -136,10 +142,33 @@ export default function Leaderboard() {
       <div className={`modal ${modal}`}>
         <div className="modal-box">
           <h3 className="font-bold text-xl flex">
-            <span className="ml-1 text-xl mb-4">
-              Hello
+            <span className="text-3xl mb-4">
+              {entry.name}
             </span>
           </h3>
+          Current score: <code className="font-bold bg-black p-1 text-slate-200 rounded-md">{entry.score}</code>
+          <div className="divider" />
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <h4 className="text-xl">Draft Prediction</h4>
+              <ul>
+                {entry.picks.map((p) => (
+                  <li className="list-decimal ml-6" key={p}>{p}</li>
+                ))}
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="text-xl">Scores</h4>
+              <ul>
+                {entry.scores.map((s, i) => (
+                  <li className="list-decimal ml-6" key={i}>
+                    {s.item.name}: <code className="font-bold">{s.score}</code>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
           <div className="modal-action pt-5">
             <label htmlFor="my-modal" className="btn" onClick={handleClose}>Close</label>
           </div>
