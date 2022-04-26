@@ -9,24 +9,19 @@ import Nav from '../../components/nav'
 import Loading from '../../components/loading'
 
 const sorted = (entries, i) => {
-  console.log(entries);
-  return entries
-
-  // return _orderBy(entries.map((entry) => {
-  //   const current = entry.scores[i].score
-  //   return {
-  //     ...entry,
-  //     current
-  //   }
-  // }), ['current'], ['asc'])
+  return _orderBy(entries.map((entry) => {
+    const current = entry.scores[i].score
+    return {
+      ...entry,
+      current
+    }
+  }), ['current'], ['asc'])
 }
 
 const getScores = (entry, idx) => {
-  return 3
-  
-  // const { scores } = entry 
-  // const { score, floor, ceiling } = scores[idx]
-  // return score
+  const { scores } = entry 
+  const { score } = scores[idx]
+  return score
 }
 
 export default function Leaderboard() {
@@ -49,10 +44,9 @@ export default function Leaderboard() {
         description,
         items,
       }} = json
-      const reversed = items.reverse()
       setFetching(false)
       setLeaderboard({
-        items: reversed,
+        items,
         ...json
       })
       setDescription(description)
