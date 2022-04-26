@@ -52,6 +52,9 @@ async function getDraft(name) {
 }
 
 async function getEntries(name, draft) {
+  // TODO: filter on name
+  // TODO: set PENALTY in draft collection obj
+
   const PENALTY = 50
   const collection = 'entries'
   const entries = await client.query(
