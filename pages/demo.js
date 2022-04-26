@@ -18,23 +18,7 @@ const sorted = (entries, i) => {
 const getScores = (entry, idx) => {
   const { scores } = entry 
   const { score, floor, ceiling } = scores[idx]
-  return (
-    <ul>
-      <li>
-        score: {score}
-      </li>
-      {floor && (
-        <li>
-          floor: {floor}
-        </li>
-      )}
-      {ceiling && (
-        <li>
-          ceiling: {ceiling}
-        </li>
-      )}
-    </ul>
-  )
+  return score
 }
 
 export default function Demo() {
@@ -55,26 +39,25 @@ export default function Demo() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="wrapper">
-        <div className="row">
-          <div className="column">
-            <h3>Items</h3>
+      <main className="wrapper mt-2">
+        <div className="grid grid-cols-2 gap-3">
+          <div className="ml-5">
+            <h3 className="text-3xl">Items</h3>
             <ul>
               {data.items.map((item) => (
-                <li key={item.name}>{item.name}</li>
+                <li className="list-disc ml-6" key={item.name}>{item.name}</li>
               ))}
             </ul>
-            <h3>Draft</h3>
+            <h3 className="text-3xl mt-5">Draft</h3>
             <ol>
               {data.draft.map((item, idx) => (
-                <li key={item.name}>
+                <li className="list-disc ml-6" key={item.name}>
                   {item.name}
                   <ul>
                     {
                       sorted(data.entries, idx).map((entry) => (
-                        <li key={entry.name}>
-                          {entry.name}
-                          {getScores(entry, idx)}
+                        <li className="list-disc ml-6" key={entry.name}>
+                          {entry.name}: {getScores(entry, idx)}
                         </li>
                       ))
                     }
@@ -83,29 +66,31 @@ export default function Demo() {
               ))}
             </ol>
           </div>
-          <div className="column">
-            <h3>Entries</h3>
+          <div className="mr-2">
+            <h3 className="text-3xl">Entries</h3>
             <ul>
               {data.entries.map((entry) => (
-                <li key={entry.name} className="entry">
+                <li key={entry.name} className="list-disc ml-6">
                   {entry.name}: {entry.score}
                   <ol>
                     {entry.items.map((i) => (
-                      <li key={i.name}>{i.name}</li>
+                      <li key={i.name} className="list-disc ml-6">{i.name}</li>
                     ))}
                   </ol>
                 </li>
               ))}
             </ul>
-            <h3>About</h3>
-            <p>Each entry is a random draft prediction for an Avenger in a hypothetical draft. The entry receives the square of the absolute value of the number of positions they are off from where the Avenger was actually drafted.</p>
-            <p>Thus, if Hulk goes number one overall, and your entry predicts him going fourth, your score for that pick is nine:</p>
-            <p><code className="code">(4 - 1) ^ 2 = 9</code></p>
-            <p>If the Avenger is drafted in the spot where the entry predicted they would be drafted, then the score for that pick is zero.</p>
-            <p>If an Avenger is drafted and they are not listed in the entry at all, then they are scored as if they were predicted to be drafted number <code className="code">{data.PENALTY}</code> overall.</p>
-            <p>Thus, if Thor goes number one overall, and you did not predict that he would be drafted, your score for that pick is:</p>
-            <p><code className="code">{`(${data.PENALTY} - 1) ^ 2 = ${Math.pow(Math.abs(data.PENALTY - 1), 2)}`}</code></p>
-            <p>Lowest score wins.</p>
+            <h3 className="text-3xl mt-5">About</h3>
+            <div className="mx-4">
+              <p className="pb-4">Each entry is a random draft prediction for an Avenger in a hypothetical draft. The entry receives the square of the absolute value of the number of positions they are off from where the Avenger was actually drafted.</p>
+              <p className="pb-4">Thus, if Hulk goes number one overall, and your entry predicts him going fourth, your score for that pick is nine:</p>
+              <p className="pb-4"><code className="code">(4 - 1) ^ 2 = 9</code></p>
+              <p className="pb-4">If the Avenger is drafted in the spot where the entry predicted they would be drafted, then the score for that pick is zero.</p>
+              <p className="pb-4">If an Avenger is drafted and they are not listed in the entry at all, then they are scored as if they were predicted to be drafted number <code className="code">{data.PENALTY}</code> overall.</p>
+              <p className="pb-4">Thus, if Thor goes number one overall, and you did not predict that he would be drafted, your score for that pick is:</p>
+              <p className="pb-4"><code className="code">{`(${data.PENALTY} - 1) ^ 2 = ${Math.pow(Math.abs(data.PENALTY - 1), 2)}`}</code></p>
+              <p>Lowest score wins.</p>
+            </div>
           </div>
         </div>
       </main>
