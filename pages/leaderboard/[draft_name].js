@@ -9,8 +9,9 @@ import Nav from '../../components/nav'
 import Loading from '../../components/loading'
 
 const sorted = (entries, i) => {
+  console.log(entries);
   return _orderBy(entries.map((entry) => {
-    const current = entry.scores[i].score
+    const current = entry.score
     return {
       ...entry,
       current
@@ -25,6 +26,8 @@ const getScores = (entry, idx) => {
 }
 
 export default function Leaderboard() {
+  const [ index, setIndex ] = useState(null)
+  const [ items, setItems] = useState([])
   const [ fetching, setFetching ] = useState(true)
   const [ description, setDescription ] = useState('')
   const router = useRouter()
@@ -45,10 +48,12 @@ export default function Leaderboard() {
         items,
       }} = json
       setFetching(false)
+      setIndex(items.length - 1)
       setLeaderboard({
         items,
         ...json
       })
+      setItems(items)
       setDescription(description)
     }
     if (draft_name) {
@@ -76,7 +81,7 @@ export default function Leaderboard() {
                     <div className="flex flex-wrap">
                       {leaderboard && leaderboard.draft && leaderboard.draft.total_picks && Array(leaderboard.draft.total_picks).fill().map((x, idx) => (
                         <div key={idx}>
-                          <button className="btn btn-xs mx-1 my-1 w-8" disabled={idx > (leaderboard.items.length - 1)}>
+                          <button className={`btn btn-xs mx-1 my-1 w-8 ${index === idx && 'btn-secondary'} cursor-default btn-active`} disabled={idx > (leaderboard.items.length - 1)} id={idx + 1}>
                             {idx + 1}
                           </button>
                         </div>
@@ -85,21 +90,22 @@ export default function Leaderboard() {
                   </div>
                 </div>
 
-                {leaderboard.items[leaderboard.items.length - 1] && (
+                {items && items[index] && (
                   <div className="card md:w-96 bg-base-100 shadow-xl mt-3">
                     <div className="card-body">
                       <h2 className="card-title border-b-2">
-                        #{leaderboard.items.length} {leaderboard.items[leaderboard.items.length - 1]}
+                        #{index + 1} {items[index]}
                       </h2>
                       <div className="overflow-x-auto">
                         <table className="table w-full">
                           <tbody>
                             {
-                              sorted(leaderboard.entries, leaderboard.items.length - 1).map((entry, index) => (
+                              sorted(leaderboard.entries, index).map((entry, index) => (
                                 <tr key={entry.name}>
                                   <th>{index + 1}</th>
                                   <td>{entry.name}</td>
-                                  <td>{getScores(entry, leaderboard.items.length - 1)}</td>
+                                  <td>{getScores(entry, index)}</td>
+                                  <td><code className="font-bold bg-black p-1 text-slate-200 rounded-md">{entry.score}</code></td>
                                 </tr>
                               ))
                             }
