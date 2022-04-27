@@ -2,7 +2,9 @@ import Link from 'next/link'
 import { useState, useContext } from 'react'
 import { useRouter } from 'next/router'
 import { GlobalContext } from '../context/GlobalState'
-import { getShortAddress } from '../utils/name'
+
+// TODO: refactor to featured draft
+const PENALTY = 50
 
 const Nav = () => {
   const [ modalProfile, setModalProfile ] = useState('')
@@ -47,9 +49,6 @@ const Nav = () => {
           <a className="mr-2 link link-hover" onClick={handleOpenAbout}>About</a>
           { name && (
             <>
-              <Link href="/">
-                <a className={`mr-2 link ${pathname !== '/' && 'link-hover'}`}>Home</a>
-              </Link>
               <div className="dropdown dropdown-end">
                 <label tabIndex="0" className="btn btn-outline text-stone-50">
                   {name}
@@ -144,6 +143,37 @@ const Nav = () => {
               About
             </span>
           </h3>
+
+              <div>
+
+                <p className="pb-4">
+                  Do your best to predict the outcome of the 2022 NFL Draft. The scoring for your submission works as follows:
+                </p>
+                <p className="pb-4">
+                  Each pick receives the square of the absolute value of the number of positions that it is off from where the athlete was actually drafted.
+                </p>
+                <p className="pb-4">
+                  Thus, if Drake London goes number one overall, and your entry predicts him going fourth, your score for that pick is nine:
+                </p>
+                <p className="pb-4">
+                  <code className="code">(4 - 1) ^ 2 = 9</code>
+                </p>
+                <p className="pb-4">
+                  If an athlete is drafted in the spot where your entry predicted they would be drafted, then the score for that pick is zero.</p>
+                <p className="pb-4">
+                  If an athlete is drafted and they are not listed in your entry at all, then they are scored as if they were predicted to be drafted number <code className="code">{PENALTY}</code> overall.
+                </p>
+                <p className="pb-4">
+                  Thus, if Kenny Picket goes number ten overall, and you did not predict that he would be drafted, your score for that pick is:
+                </p>
+                <p className="pb-4">
+                  <code className="code">{`(${PENALTY} - 10) ^ 2 = ${Math.pow(Math.abs(PENALTY - 10), 2)}`}</code>
+                  </p>
+                <p>
+                  Lowest score wins.
+                </p>
+              </div>
+
           <div className="modal-action pt-5">
             <label htmlFor="my-modal" className="btn" onClick={handleCloseAbout}>Close</label>
           </div>
