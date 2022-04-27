@@ -180,7 +180,7 @@ export default function Leaderboard() {
                                         </span>
                                       </div>
                                       {entry.official && (
-                                        <span className="ml-2 tooltip" data-tip="Official ESPN Expert">
+                                        <span className="ml-2 tooltip" data-tip={entry.official}>
                                           <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                                             <path strokeLinecap="round" strokeLinejoin="round" d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z" />
                                           </svg>
@@ -222,6 +222,26 @@ export default function Leaderboard() {
             <span className="text-3xl mb-4">
               {entry.name}
             </span>
+
+            {entry.official && (
+              <span className="ml-2 tooltip" data-tip={entry.official}>
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z" />
+                </svg>
+              </span>
+            )}
+            {entry.account && (
+              <span className="ml-2 tooltip" data-tip="Minted NFT">
+                <Link href={`${leaderboard.draft.market_url}/${leaderboard.draft.contract}/${entry.id}`}>
+                  <a target="_blank" rel="noreferrer" className="link">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                  </a>
+                </Link>
+              </span>
+            )}
+
           </h3>
           Current score: <code className="font-bold bg-black p-1 text-slate-200 rounded-md">{entry.score}</code>
           <div className="divider" />
