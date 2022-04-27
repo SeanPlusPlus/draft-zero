@@ -1,9 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { GlobalContext } from '../../context/GlobalState'
 import _orderBy from 'lodash/orderBy'
 import _find from 'lodash/find'
+import { GlobalContext } from '../../context/GlobalState'
+import { useInterval } from '../../utils/useInterval'
 
 // components
 import Header from '../../components/header'
@@ -50,27 +51,52 @@ export default function Leaderboard() {
     setLeaderboard,
   } = useContext(GlobalContext)
 
+  async function fetchData() {
+    const res = await fetch(`/api/leaderboard/${draft_name}`)
+    const json = await res.json()
+    return json
+  }
+
   useEffect(() => {
-    async function fetchData() {
-      const res = await fetch(`/api/leaderboard/${draft_name}`)
-      const json = await res.json()
+    if (draft_name) {
+      fetchData().then((json) => {
+        const { draft: {
+          description,
+          items,
+        }} = json
+        setFetching(false)
+        setIndex(items.length - 1)
+        setLeaderboard({
+          items,
+          ...json
+        })
+        setItems(items)
+        setDescription(description)
+      })
+    }
+  }, [draft_name])
+
+  useInterval(() => {
+    fetchData().then((json) => {
       const { draft: {
         description,
         items,
       }} = json
-      setFetching(false)
-      setIndex(items.length - 1)
-      setLeaderboard({
-        items,
-        ...json
-      })
-      setItems(items)
-      setDescription(description)
-    }
-    if (draft_name) {
-      fetchData()
-    }
-  }, [draft_name])
+      const d = new Date();
+      if (items.length > leaderboard.items.length) {
+        console.log('* UPDATING *', d.toLocaleTimeString())
+        setIndex(items.length - 1)
+        setLeaderboard({
+          items,
+          ...json
+        })
+        setItems(items)
+        setDescription(description)
+      } else {
+        console.log('polling', d.toLocaleTimeString())
+      }
+    })
+  }, 1000 * 3);
 
   const handleModal = (e) => {
     const { target: { id }} = e
