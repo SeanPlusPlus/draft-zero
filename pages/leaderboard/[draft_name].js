@@ -82,7 +82,7 @@ export default function Leaderboard() {
         items,
       }} = json
       const d = new Date();
-      if (items.length > leaderboard.items.length) {
+      if (items.length !== leaderboard.items.length) {
         console.log('* UPDATING *', d.toLocaleTimeString())
         setIndex(items.length - 1)
         setLeaderboard({
@@ -98,7 +98,7 @@ export default function Leaderboard() {
   }, 1000 * 3);
 
   const handleModal = (e) => {
-    const { target: { id }} = e
+    const id = e.target.closest('tr').id
     const entry = _find(leaderboard.entries, (item) => { return item.id === id })
     
     setModal('modal-open')
@@ -164,11 +164,11 @@ export default function Leaderboard() {
                           <tbody>
                             {
                               sorted(leaderboard.entries, index).map((entry, i) => (
-                                <tr key={i}>
+                                <tr key={i} id={entry.id} onClick={handleModal} className="hover cursor-pointer">
                                   <th>{i + 1}</th>
                                   <td>
                                     <div className="flex">
-                                      <div className="link link-info" id={entry.id} onClick={handleModal}>
+                                      <div>
                                         <span className="block md:hidden">
                                           {truncate(entry.name, 7)}
                                         </span>
