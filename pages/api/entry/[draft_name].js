@@ -15,7 +15,39 @@ const client = new faunadb.Client({
 const {
   Collection,
   Create,
+  Select,
+  Paginate,
+  Match,
+  Index,
+  Get,
+  Ref,
 } = q
+
+async function getDraft(name) {
+  const index = 'drafts_by_name'
+  const item = await client.query(
+    Select([0],
+      Paginate(
+        Match(
+          Index(index),
+          name
+        )
+      )
+    )
+  )
+  const ref = item[1].value.id
+  const collection = 'drafts'
+  const draft = await client.query(
+    Get(
+      Ref(
+        Collection(collection),
+        ref
+      )
+    )
+  )
+
+  return draft.data
+}
 
 export default async function nfl(req, res) {
   const {
@@ -34,41 +66,48 @@ export default async function nfl(req, res) {
     return
   }
 
-  const new_draft = {
-    draft_name,
-    picks,
-    name,
-    account,
-  }
- 
-  const collection = 'entries'
-  const draft = await client.query(
-    Create(
-      Collection(collection),
-      { data: new_draft }
-    )
-  )
-
-  const draft_id = draft.ref.id
- 
-  if (account) {
-    const minted = await mint(account, draft_id)
-    res.status(200).json({
-      draft_id,
-      name,
+  const d = await getDraft(draft_name)
+  if (d.closed) {
+    res.status(400).json({
+      message: 'Draft closed',
+      error: true,
+    })
+    return
+  } else { // draft is open
+    const new_draft = {
+      draft_name,
       picks,
+      name,
       account,
-      minted,
-    })
-    return
-  } else {
-    res.status(200).json({
-      user_id,
-      name,
-      picks,
-    })
-    return
+    }
+  
+    const collection = 'entries'
+    const draft = await client.query(
+      Create(
+        Collection(collection),
+        { data: new_draft }
+      )
+    )
+
+    const draft_id = draft.ref.id
+  
+    if (account) {
+      const minted = await mint(account, draft_id)
+      res.status(200).json({
+        draft_id,
+        name,
+        picks,
+        account,
+        minted,
+      })
+      return
+    } else {
+      res.status(200).json({
+        draft_id,
+        name,
+        picks,
+      })
+      return
+    }
   }
-
-
 }

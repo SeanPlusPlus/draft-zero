@@ -115,7 +115,7 @@ export default function Leaderboard() {
                           <tbody>
                             {
                               sorted(leaderboard.entries, index).map((entry, i) => (
-                                <tr key={entry.name}>
+                                <tr key={i}>
                                   <th>{i + 1}</th>
                                   <td>
                                     <div className="link link-info" id={entry.id} onClick={handleModal}>

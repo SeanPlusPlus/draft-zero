@@ -19,6 +19,7 @@ const Info = () => (
 )
 
 export default function Draft() {
+  const [ error, setError ] = useState(false)
   const [ closed, setClosed ] = useState(null)
   const [ modal, setModal ] = useState('')
   const [ description, setDescription ] = useState('')
@@ -109,6 +110,9 @@ export default function Draft() {
     const json = await res.json()
     console.log('json', json);
     setModal('modal-open')
+    if (json.error) {
+      setError(true)
+    }
   }
 
   if (closed) {
@@ -196,17 +200,32 @@ export default function Draft() {
 
       <div className={`modal ${modal}`}>
         <div className="modal-box">
-          <h3 className="font-bold text-xl flex">
-            <span className="ml-1 text-4xl mb-4">
-              Success!
-            </span>
-          </h3>
-          <p className="pt-4">
-            <code>{draftUserName}</code>
-          </p>
-          <p className="pt-4">
-            Your draft prediction was received
-          </p>
+          {!error ? (
+            <>
+              <h3 className="font-bold text-xl flex">
+                <span className="ml-1 text-4xl mb-4">
+                  Success!
+                </span>
+              </h3>
+              <p className="pt-4">
+                <code>{draftUserName}</code>
+              </p>
+              <p className="pt-4">
+                Your draft prediction was received
+              </p>
+            </>
+          ) : (
+            <>
+              <h3 className="font-bold text-xl flex">
+                <span className="ml-1 text-4xl mb-4">
+                  Error
+                </span>
+              </h3>
+              <p className="pt-4">
+                Draft is closed
+              </p>
+            </>
+          )}
           <div className="modal-action pt-5">
             <Link href={`/leaderboard/${draft_name}`}>
               <a className="btn">
@@ -216,7 +235,6 @@ export default function Draft() {
           </div>
         </div>
       </div>
-
     </div>
   )
 }
