@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { GlobalContext } from '../../context/GlobalState'
 import _orderBy from 'lodash/orderBy'
@@ -8,6 +9,14 @@ import _find from 'lodash/find'
 import Header from '../../components/header'
 import Nav from '../../components/nav'
 import Loading from '../../components/loading'
+
+const truncate = (input) => {
+  const n = 15
+  if (input.length > n) {
+     return input.substring(0, n) + '...'
+  }
+  return input
+}
 
 const sorted = (entries, i) => {
   return _orderBy(entries.map((entry) => {
@@ -95,7 +104,7 @@ export default function Leaderboard() {
                     <div className="flex flex-wrap">
                       {leaderboard && leaderboard.draft && leaderboard.draft.total_picks && Array(leaderboard.draft.total_picks).fill().map((x, idx) => (
                         <div key={idx}>
-                          <button className={`btn btn-xs mx-1 my-1 w-8 ${index === idx && 'btn-secondary'} cursor-default btn-active`} disabled={idx > (leaderboard.items.length - 1)} id={idx + 1}>
+                          <button className={`btn btn-xs mx-1 my-1 w-7 ${index === idx && 'btn-secondary'} cursor-default btn-active`} disabled={idx > (leaderboard.items.length - 1)} id={idx + 1}>
                             {idx + 1}
                           </button>
                         </div>
@@ -116,7 +125,7 @@ export default function Leaderboard() {
                             <tr>
                               <th>Rank</th>
                               <th>Name</th>
-                              <th>Current</th>
+                              <th className="hidden md:block">Current</th>
                               <th>Total</th>
                             </tr>
                           </thead>
@@ -128,7 +137,7 @@ export default function Leaderboard() {
                                   <td>
                                     <div className="flex">
                                       <div className="link link-info" id={entry.id} onClick={handleModal}>
-                                        {entry.name}
+                                        {truncate(entry.name)}
                                       </div>
                                       {entry.official && (
                                         <span className="ml-2 tooltip" data-tip="Official ESPN Expert">
@@ -137,9 +146,20 @@ export default function Leaderboard() {
                                           </svg>
                                         </span>
                                       )}
+                                      {entry.account && (
+                                        <span className="ml-2 tooltip" data-tip="Minted NFT">
+                                          <Link href={`${leaderboard.draft.market_url}/${leaderboard.draft.contract}/${entry.id}`}>
+                                            <a target="_blank" rel="noreferrer" className="link">
+                                              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                                <path strokeLinecap="round" strokeLinejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                              </svg>
+                                            </a>
+                                          </Link>
+                                        </span>
+                                      )}
                                     </div>
                                   </td>
-                                  <td>{getScores(entry, index)}</td>
+                                  <td className="hidden md:block">{getScores(entry, index)}</td>
                                   <td><code className="font-bold bg-black p-1 text-slate-200 rounded-md">{entry.score}</code></td>
                                 </tr>
                               ))
