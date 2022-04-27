@@ -12,7 +12,7 @@ const Info = () => (
   <div className="alert alert-info shadow-lg mb-5">
     <div>
       <span className="text-sm">
-        Optionally <Link href="/"><a className="link">connect your wallet</a></Link>, and mint your draft
+        Optionally <Link href="/"><a className="link">connect your wallet</a></Link>, signin to Immutable X, and mint your draft
       </span>
     </div>
   </div> 
@@ -144,7 +144,7 @@ export default function Draft() {
       <Nav />
       <div className="hero">
         {options.length > 0 && (
-          <div className="hero-content text-center">
+          <div className="hero-content text-center md:w-96">
             <div className="max-w-md">
               {!account && (
                 <Info />
