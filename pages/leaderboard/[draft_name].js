@@ -11,8 +11,7 @@ import Header from '../../components/header'
 import Nav from '../../components/nav'
 import Loading from '../../components/loading'
 
-const truncate = (input) => {
-  const n = 15
+const truncate = (input, n) => {
   if (input.length > n) {
      return input.substring(0, n) + '...'
   }
@@ -149,7 +148,14 @@ export default function Leaderboard() {
                         <table className="mt-4 table w-full table-zebra">
                           <thead>
                             <tr>
-                              <th>Rank</th>
+                              <th>
+                                <span className="block md:hidden">
+                                  #
+                                </span>
+                                <span className="hidden md:block">
+                                  Rank
+                                </span>
+                              </th>
                               <th>Name</th>
                               <th className="hidden md:block">Current</th>
                               <th>Total</th>
@@ -163,11 +169,19 @@ export default function Leaderboard() {
                                   <td>
                                     <div className="flex">
                                       <div className="link link-info" id={entry.id} onClick={handleModal}>
-                                        {truncate(entry.name)}
+                                        <span className="block md:hidden">
+                                          {truncate(entry.name, 7)}
+                                        </span>
+                                        <span className="hidden md:block lg:hidden">
+                                          {truncate(entry.name, 15)}
+                                        </span>
+                                        <span className="hidden lg:block">
+                                          {truncate(entry.name, 25)}
+                                        </span>
                                       </div>
                                       {entry.official && (
                                         <span className="ml-2 tooltip" data-tip="Official ESPN Expert">
-                                          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                                             <path strokeLinecap="round" strokeLinejoin="round" d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z" />
                                           </svg>
                                         </span>
@@ -176,7 +190,7 @@ export default function Leaderboard() {
                                         <span className="ml-2 tooltip" data-tip="Minted NFT">
                                           <Link href={`${leaderboard.draft.market_url}/${leaderboard.draft.contract}/${entry.id}`}>
                                             <a target="_blank" rel="noreferrer" className="link">
-                                              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                               </svg>
                                             </a>
