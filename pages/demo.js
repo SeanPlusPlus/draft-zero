@@ -6,6 +6,7 @@ import _orderBy from 'lodash/orderBy'
 
 import Loading from '../components/loading'
 import Nav from '../components/nav';
+import Header from '../components/header';
 
 const API_BASE = '/api/'
 
@@ -56,13 +57,8 @@ export default function Demo() {
 
   return (
     <>
-      <Head>
-        <title>Draft Zero</title>
-        <meta name="description" content="Draft Zero" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <Header />
       <Nav />
-
       { data.entries.length ? (
         <main className="wrapper mt-2">
           <div className="grid grid-cols-2 gap-3">
