@@ -135,7 +135,7 @@ const Login = () => {
               <code className="text-md">Public Key: {name}</code>
               <div className="divider"></div>
               {!imx ? (
-                <button className="btn" onClick={setupImxAccount}>Connect to Immutable X</button>
+                <button className="btn" onClick={setupImxAccount}>Signin to Immutable X</button>
               ) : (
                 <code className="text-md">Stark Key: {getShortAddress(imx.starkPublicKey)}</code>
               )}

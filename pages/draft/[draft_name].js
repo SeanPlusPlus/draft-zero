@@ -37,7 +37,10 @@ export default function Draft() {
     setOptions,
 
     // account
-    account
+    account,
+
+    // imx 
+    imx,
   } = useContext(GlobalContext)
 
   const router = useRouter()
@@ -146,7 +149,7 @@ export default function Draft() {
         {options.length > 0 && (
           <div className="hero-content text-center md:w-96">
             <div className="max-w-md">
-              {!account && (
+              {!imx && (
                 <Info />
               )}
               <h1 className="text-4xl font-bold">{description}</h1>
