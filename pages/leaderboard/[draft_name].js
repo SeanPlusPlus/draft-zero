@@ -273,7 +273,8 @@ export default function Leaderboard() {
       </div>
 
       <div className={`modal ${modal}`}>
-        <div className="modal-box">
+        <div className="modal-box relative">
+          <label htmlFor="my-modal-3" className="btn btn-sm btn-circle absolute right-2 top-2" onClick={handleClose}>✕</label>
           <h3 className="font-bold text-xl flex">
             <span className="text-3xl mb-4">
               {entry.name}
