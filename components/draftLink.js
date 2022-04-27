@@ -2,6 +2,7 @@ import Link from 'next/link'
 
 const featured = {
   active: true,
+  closed: false,
   description: 'NFL 2022',
   draft_link: '/draft/nfl-2022',
   leaderboard_link: '/leaderboard/nfl-2022',
@@ -18,9 +19,11 @@ const DraftLink = () => {
         <div className="card-body">
           <h2 className="card-title">{featured.description}</h2>
           <div className="btn-group">
-            <Link href={featured.draft_link}>
-              <a className="btn btn-outline md:w-40">Draft</a>
-            </Link>
+            {!featured.closed && (
+              <Link href={featured.draft_link}>
+                <a className="btn btn-secondary md:w-40">Draft</a>
+              </Link>
+            )}
             <Link href={featured.leaderboard_link}>
               <a className="btn btn-outline md:w-40">Leaderboard</a>
             </Link>

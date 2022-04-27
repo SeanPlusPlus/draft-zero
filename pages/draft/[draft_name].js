@@ -12,13 +12,14 @@ const Info = () => (
   <div className="alert alert-info shadow-lg mb-5">
     <div>
       <span className="text-sm">
-        Optionally <Link href="/"><a className="link">connect your wallet</a></Link> and mint your draft
+        Optionally <Link href="/"><a className="link">connect your wallet</a></Link>, and mint your draft
       </span>
     </div>
   </div> 
 )
 
-export default function NFL() {
+export default function Draft() {
+  const [ closed, setClosed ] = useState(null)
   const [ modal, setModal ] = useState('')
   const [ description, setDescription ] = useState('')
   const [ warning, setWarning ] = useState(null)
@@ -45,6 +46,7 @@ export default function NFL() {
     async function fetchData() {
       const res = await fetch(`/api/draft/${draft_name}`)
       const json = await res.json()
+      setClosed(json.closed)
       setOptions(json.options)
       setPicks(Array(json.total_picks).fill(null))
       setDescription(json.description)
@@ -107,6 +109,29 @@ export default function NFL() {
     const json = await res.json()
     console.log('json', json);
     setModal('modal-open')
+  }
+
+  if (closed) {
+    return (
+      <div className="min-h-screen grid-bg">
+        <Header />
+        <Nav />
+        <div className="hero">
+          <div className="hero-content text-center">
+            <div className="card md:w-96 bg-base-100 shadow-xl">
+              <div className="card-body">
+                <h1 className="text-4xl font-bold">Draft Closed</h1>
+                <Link href={`/leaderboard/${draft_name}`}>
+                  <a className="btn">
+                    Visit the leaderbaord
+                  </a>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
   }
  
   return (
