@@ -22,6 +22,9 @@ export default function Draft() {
   const [ error, setError ] = useState(false)
   const [ closed, setClosed ] = useState(null)
   const [ modal, setModal ] = useState('')
+  const [ minted, setMinted] = useState(null)
+  const [ market_url, setMarketUrl ] = useState(null)
+  const [ contract, setContract ] = useState(null)
   const [ description, setDescription ] = useState('')
   const [ warning, setWarning ] = useState(null)
   const [ draftUserName, setDraftName ] = useState(null)
@@ -54,6 +57,8 @@ export default function Draft() {
       setOptions(json.options)
       setPicks(Array(json.total_picks).fill(null))
       setDescription(json.description)
+      setMarketUrl(json.market_url)
+      setContract(json.contract)
     }
     if (draft_name) {
       fetchData()
@@ -111,7 +116,14 @@ export default function Draft() {
     }
     const res = await fetch(`/api/entry/${draft_name}`, options)
     const json = await res.json()
-    console.log('json', json);
+    
+    console.log('* json *', json);
+
+    if (json.minted) {
+      const results = json.minted && json.minted.results
+      setMinted(results[0])
+    }
+
     setModal('modal-open')
     if (json.error) {
       setError(true)
@@ -227,6 +239,21 @@ export default function Draft() {
               <p className="pt-4">
                 Draft is closed
               </p>
+            </>
+          )}
+          {minted && (
+            <>
+              <Link href={`${market_url}/${contract}/${minted.token_id}`}>
+                <a target="_blank" rel="noreferrer" className="btn btn-secondary btn-outline mt-4">
+                  <span className="mr-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  </span>
+                  Checkout your NFT 
+                </a>
+              </Link>
+              <p className="text-sm mt-4">Note: sometimes it takes a minute or two to show up on the Immutable marketplace</p>
             </>
           )}
           <div className="modal-action pt-5">
