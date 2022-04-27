@@ -92,7 +92,7 @@ export default function Leaderboard() {
         setItems(items)
         setDescription(description)
       } else {
-        console.log('polling', d.toLocaleTimeString())
+        // console.log('polling', d.toLocaleTimeString())
       }
     })
   }, 1000 * 3);
@@ -137,6 +137,62 @@ export default function Leaderboard() {
                     </div>
                   </div>
                 </div>
+
+                {items.length === 0 && (
+                  <div className="card bg-base-100 shadow-xl mt-3">
+                    <div className="card-body">
+                      <h2 className="card-title border-b-2">
+                        Entries
+                      </h2>
+                      <div className="overflow-x-auto">
+                        <table className="mt-4 table w-full table-zebra">
+                          <tbody>
+                            {
+                              leaderboard.entries.map((entry, i) => (
+                                <tr key={i} id={entry.id} onClick={handleModal} className="hover cursor-pointer">
+                                  <td>
+                                    <div className="flex">
+                                      <div>
+                                        <span className="block md:hidden">
+                                          {truncate(entry.name, 7)}
+                                        </span>
+                                        <span className="hidden md:block lg:hidden">
+                                          {truncate(entry.name, 15)}
+                                        </span>
+                                        <span className="hidden lg:block">
+                                          {truncate(entry.name, 25)}
+                                        </span>
+                                      </div>
+                                      {entry.official && (
+                                        <span className="ml-2 tooltip" data-tip={entry.official}>
+                                          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z" />
+                                          </svg>
+                                        </span>
+                                      )}
+                                      {entry.account && (
+                                        <span className="ml-2 tooltip" data-tip="Minted NFT">
+                                          <Link href={`${leaderboard.draft.market_url}/${leaderboard.draft.contract}/${entry.id}`}>
+                                            <a target="_blank" rel="noreferrer" className="link">
+                                              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                                <path strokeLinecap="round" strokeLinejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                              </svg>
+                                            </a>
+                                          </Link>
+                                        </span>
+                                      )}
+                                    </div>
+                                  </td>
+                                </tr>
+                              ))
+                            }
+                          </tbody>
+
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                )}
 
                 {items && items[index] && (
                   <div className="card bg-base-100 shadow-xl mt-3">
@@ -243,7 +299,14 @@ export default function Leaderboard() {
             )}
 
           </h3>
-          Current score: <code className="font-bold bg-black p-1 text-slate-200 rounded-md">{entry.score}</code>
+          {items.length > 0 && (
+            <>
+              <span className="mr-1">
+                Current score: 
+              </span>
+              <code className="font-bold bg-black p-1 text-slate-200 rounded-md">{entry.score}</code>
+            </>
+          )}
           <div className="divider" />
           <div className="grid grid-cols-2 gap-3">
             <div>
@@ -255,16 +318,18 @@ export default function Leaderboard() {
               </ul>
             </div>
 
-            <div>
-              <h4 className="text-xl">Scores</h4>
-              <ul>
-                {entry.scores.map((s, i) => (
-                  <li className="list-decimal ml-6" key={i}>
-                    {s.item.name}: <code className="font-bold">{s.score}</code>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            {items.length > 0 && (
+              <div>
+                <h4 className="text-xl">Scores</h4>
+                <ul>
+                  {entry.scores.map((s, i) => (
+                    <li className="list-decimal ml-6" key={i}>
+                      {s.item.name}: <code className="font-bold">{s.score}</code>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
           <div className="modal-action pt-5">
             <label htmlFor="my-modal" className="btn" onClick={handleClose}>Close</label>
