@@ -111,7 +111,15 @@ export default function Leaderboard() {
                         #{index + 1} {items[index]}
                       </h2>
                       <div className="overflow-x-auto">
-                        <table className="table w-full">
+                        <table className="mt-4 table w-full table-zebra">
+                          <thead>
+                            <tr>
+                              <th>Rank</th>
+                              <th>Name</th>
+                              <th>Current</th>
+                              <th>Total</th>
+                            </tr>
+                          </thead>
                           <tbody>
                             {
                               sorted(leaderboard.entries, index).map((entry, i) => (
