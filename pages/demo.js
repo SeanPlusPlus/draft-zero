@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link'
 import axios from 'axios';
 import Head from 'next/head'
 import _orderBy from 'lodash/orderBy'
 
 import Loading from '../components/loading'
+import Nav from '../components/nav';
 
 const API_BASE = '/api/'
 
@@ -30,10 +32,27 @@ export default function Demo() {
     const url = API_BASE + 'demo'
     const result = await axios(url);
 
-    console.log('*', result.data);
-
     setData(result.data);
   }, []);
+
+  const About = () => (
+    <div className="mx-4">
+      <p className="pb-4">Each entry is a random draft prediction for an Avenger in a hypothetical draft. The entry receives the square of the absolute value of the number of positions they are off from where the Avenger was actually drafted.</p>
+      <p className="pb-4">Thus, if Hulk goes number one overall, and your entry predicts him going fourth, your score for that pick is nine:</p>
+      <p className="pb-4"><code className="code">(4 - 1) ^ 2 = 9</code></p>
+      <p className="pb-4">If the Avenger is drafted in the spot where the entry predicted they would be drafted, then the score for that pick is zero.</p>
+      <p className="pb-4">If an Avenger is drafted and they are not listed in the entry at all, then they are scored as if they were predicted to be drafted number <code className="code">{data.PENALTY}</code> overall.</p>
+      <p className="pb-4">Thus, if Thor goes number one overall, and you did not predict that he would be drafted, your score for that pick is:</p>
+      <p className="pb-4"><code className="code">{`(${data.PENALTY} - 1) ^ 2 = ${Math.pow(Math.abs(data.PENALTY - 1), 2)}`}</code></p>
+      <p className="pb-4">Lowest score wins.</p>
+      <p className="pb-4">
+        <Link href="/"><a className="link link-secondary">Click here to return home</a></Link>  
+      </p>
+      <p className="pb-4">
+        Or refresh this page and see a new random score get generated.
+      </p>
+    </div>
+  )
 
   return (
     <>
@@ -42,6 +61,7 @@ export default function Demo() {
         <meta name="description" content="Draft Zero" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <Nav />
 
       { data.entries.length ? (
         <main className="wrapper mt-2">
@@ -85,18 +105,15 @@ export default function Demo() {
                   </li>
                 ))}
               </ul>
-              <h3 className="text-3xl mt-5">About</h3>
-              <div className="mx-4">
-                <p className="pb-4">Each entry is a random draft prediction for an Avenger in a hypothetical draft. The entry receives the square of the absolute value of the number of positions they are off from where the Avenger was actually drafted.</p>
-                <p className="pb-4">Thus, if Hulk goes number one overall, and your entry predicts him going fourth, your score for that pick is nine:</p>
-                <p className="pb-4"><code className="code">(4 - 1) ^ 2 = 9</code></p>
-                <p className="pb-4">If the Avenger is drafted in the spot where the entry predicted they would be drafted, then the score for that pick is zero.</p>
-                <p className="pb-4">If an Avenger is drafted and they are not listed in the entry at all, then they are scored as if they were predicted to be drafted number <code className="code">{data.PENALTY}</code> overall.</p>
-                <p className="pb-4">Thus, if Thor goes number one overall, and you did not predict that he would be drafted, your score for that pick is:</p>
-                <p className="pb-4"><code className="code">{`(${data.PENALTY} - 1) ^ 2 = ${Math.pow(Math.abs(data.PENALTY - 1), 2)}`}</code></p>
-                <p>Lowest score wins.</p>
+              <div className="hidden md:block">
+                <h3 className="text-3xl mt-5">About</h3>
+                <About />
               </div>
             </div>
+          </div>
+          <div className="md:hidden ml-5">
+            <h3 className="text-3xl mt-5">About</h3>
+            <About />
           </div>
         </main>
       ) : (

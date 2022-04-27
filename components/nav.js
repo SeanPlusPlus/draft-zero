@@ -150,7 +150,7 @@ const Nav = () => {
                   Do your best to predict the outcome of the 2022 NFL Draft. The scoring for your submission works as follows:
                 </p>
                 <p className="pb-4">
-                  Each pick receives the square of the absolute value of the number of positions that it is off from where the athlete was actually drafted.
+                  Each pick receives the square of the absolute value of the number of positions that it is off from where the athlete was actually drafted. Trades will not affect the outcome, the only thing that matters is the spot the athlete was drafted in.
                 </p>
                 <p className="pb-4">
                   Thus, if Drake London goes number one overall, and your entry predicts him going fourth, your score for that pick is nine:
@@ -168,9 +168,12 @@ const Nav = () => {
                 </p>
                 <p className="pb-4">
                   <code className="code">{`(${PENALTY} - 10) ^ 2 = ${Math.pow(Math.abs(PENALTY - 10), 2)}`}</code>
-                  </p>
-                <p>
+                </p>
+                <p className="pb-4">
                   Lowest score wins.
+                </p>
+                <p className="pb-4">
+                  You can checkout the <Link href="/demo"><a className="link link-secondary">demo page</a></Link> for an interactive view of a theoretical Avengers draft.
                 </p>
               </div>
 
