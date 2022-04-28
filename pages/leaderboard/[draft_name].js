@@ -35,6 +35,7 @@ const getScores = (entry, idx) => {
 }
 
 export default function Leaderboard() {
+  const [ zap, setZap ] = useState(false)
   const [ index, setIndex ] = useState(null)
   const [ items, setItems] = useState([])
   const [ modal, setModal ] = useState('')
@@ -108,6 +109,11 @@ export default function Leaderboard() {
   const handleClose = () => {
     setModal('')
   }
+
+  const handleZap = () => {
+    const z = !zap
+    setZap(z)
+  }
  
   return (
     <div className="min-h-screen grid-bg">
@@ -141,58 +147,83 @@ export default function Leaderboard() {
                 {items.length === 0 && (
                   <div className="card bg-base-100 shadow-xl mt-3">
                     <div className="card-body">
-                      <h2 className="card-title border-b-2">
-                        Entries
+                      <h2 className="card-title border-b-2 flex">
+                        <div>
+                          Entries
+                        </div>
+                        <div className="ml-auto order-2 mb-1">
+                          {zap ? (
+                            <button className="btn btn-xs" onClick={handleZap}>
+                              <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                              </svg>
+                            </button>
+                          ) : (
+                            <button className="btn btn-xs btn-outline" onClick={handleZap}>
+                              <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                              </svg>
+                            </button>
+                          )}
+                        </div>
                       </h2>
                       <div className="overflow-x-auto">
                         <table className="mt-4 table w-full table-zebra">
                           <tbody>
                             {
-                              leaderboard.entries.map((entry, i) => (
-                                <tr key={i} id={entry.id} onClick={handleModal} className="hover cursor-pointer">
-                                  <td>
-                                    <div className="flex">
-                                      <div>
-                                        <span className="block md:hidden">
-                                          {truncate(entry.name, 7)}
-                                        </span>
-                                        <span className="hidden md:block lg:hidden">
-                                          {truncate(entry.name, 15)}
-                                        </span>
-                                        <span className="hidden lg:block">
-                                          {truncate(entry.name, 25)}
-                                        </span>
+                              leaderboard.entries
+                              .filter((entry) => {
+                                if (entry.pool || !zap) {
+                                  return true
+                                }
+                                return false
+                              })
+                              .map((entry, i) => {
+                                return (
+                                  <tr key={i} id={entry.id} onClick={handleModal} className="hover cursor-pointer">
+                                    <td>
+                                      <div className="flex">
+                                        <div>
+                                          <span className="block md:hidden">
+                                            {truncate(entry.name, 7)}
+                                          </span>
+                                          <span className="hidden md:block lg:hidden">
+                                            {truncate(entry.name, 15)}
+                                          </span>
+                                          <span className="hidden lg:block">
+                                            {truncate(entry.name, 25)}
+                                          </span>
+                                        </div>
+                                        {entry.official && (
+                                          <span className="ml-2 tooltip" data-tip={entry.official}>
+                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                              <path strokeLinecap="round" strokeLinejoin="round" d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z" />
+                                            </svg>
+                                          </span>
+                                        )}
+                                        {entry.account && (
+                                          <span className="ml-2 tooltip" data-tip="Minted NFT">
+                                            <Link href={`${leaderboard.draft.market_url}/${leaderboard.draft.contract}/${entry.id}`}>
+                                              <a target="_blank" rel="noreferrer" className="link">
+                                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                                </svg>
+                                              </a>
+                                            </Link>
+                                          </span>
+                                        )}
+                                        {entry.pool && (
+                                          <span className="ml-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                              <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                            </svg>
+                                          </span>
+                                        )}
                                       </div>
-                                      {entry.official && (
-                                        <span className="ml-2 tooltip" data-tip={entry.official}>
-                                          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                                            <path strokeLinecap="round" strokeLinejoin="round" d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z" />
-                                          </svg>
-                                        </span>
-                                      )}
-                                      {entry.account && (
-                                        <span className="ml-2 tooltip" data-tip="Minted NFT">
-                                          <Link href={`${leaderboard.draft.market_url}/${leaderboard.draft.contract}/${entry.id}`}>
-                                            <a target="_blank" rel="noreferrer" className="link">
-                                              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                                                <path strokeLinecap="round" strokeLinejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                              </svg>
-                                            </a>
-                                          </Link>
-                                        </span>
-                                      )}
-                                      {entry.pool && (
-                                        <span className="ml-2">
-                                          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                                            <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                                          </svg>
-                                        </span>
-                                      )}
-                                    </div>
-                                  </td>
-                                </tr>
-                              ))
-                            }
+                                    </td>
+                                  </tr>
+                                )})
+                              }
                           </tbody>
 
                         </table>
