@@ -181,6 +181,13 @@ export default function Leaderboard() {
                                           </Link>
                                         </span>
                                       )}
+                                      {entry.pool && (
+                                        <span className="ml-2">
+                                          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                          </svg>
+                                        </span>
+                                      )}
                                     </div>
                                   </td>
                                 </tr>
@@ -253,6 +260,13 @@ export default function Leaderboard() {
                                           </Link>
                                         </span>
                                       )}
+                                      {entry.pool && (
+                                        <span className="ml-2">
+                                          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                          </svg>
+                                        </span>
+                                      )}
                                     </div>
                                   </td>
                                   <td className="hidden md:block">{getScores(entry, index)}</td>
@@ -296,6 +310,13 @@ export default function Leaderboard() {
                     </svg>
                   </a>
                 </Link>
+              </span>
+            )}
+            {entry.pool && (
+              <span className="ml-2">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
               </span>
             )}
 
