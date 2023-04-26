@@ -86,12 +86,18 @@ export default async function leaderboard(req, res) {
   const {
     query: { draft_name },
   } = req
-  const draft = await getDraft(draft_name)
-  const entries = await getEntries(draft_name, draft)
-  const leaderboard = {
-    draft,
-    entries,
-  }
 
-  res.status(200).json(leaderboard)
+  const drafts = ['nfl-2022']
+  if (!drafts.includes(draft_name)) {
+    res.status(200).json({ draft: { description: 'Draft Not Initialized', items: []}, entries: [] } )
+  } else {
+    const draft = await getDraft(draft_name)
+    const entries = await getEntries(draft_name, draft)
+    const leaderboard = {
+      draft,
+      entries,
+    }
+
+    res.status(200).json(leaderboard)
+  }
 }

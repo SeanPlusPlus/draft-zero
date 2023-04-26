@@ -3,9 +3,9 @@ import Link from 'next/link'
 const featured = {
   active: true,
   closed: false,
-  description: 'NFL 2022',
-  draft_link: '/draft/nfl-2022',
-  leaderboard_link: '/leaderboard/nfl-2022',
+  description: 'NFL 2023',
+  draft_link: '/draft/nfl-2023',
+  leaderboard_link: '/leaderboard/nfl-2023',
 }
 
 const DraftLink = () => {
