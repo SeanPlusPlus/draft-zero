@@ -10,6 +10,7 @@ import { useInterval } from '../../utils/useInterval'
 import Header from '../../components/header'
 import Nav from '../../components/nav'
 import Loading from '../../components/loading'
+import { log } from '../../utils/logger'
 
 const truncate = (input, n) => {
   if (input.length > n) {
@@ -354,7 +355,7 @@ export default function Leaderboard() {
         <div className="modal-box relative">
           <label htmlFor="my-modal-3" className="btn btn-sm btn-circle absolute right-2 top-2" onClick={handleClose}>✕</label>
           <h3 className="font-bold text-xl flex">
-            <span className="text-3xl mb-4">
+            <span className="text-3xl mb-2">
               {entry.name}
             </span>
 
@@ -385,6 +386,9 @@ export default function Leaderboard() {
             )}
 
           </h3>
+          <div className="pb-1">
+            <code>ID: {entry.id}</code>
+          </div>
           {items.length > 0 && (
             <>
               <span className="mr-1">
