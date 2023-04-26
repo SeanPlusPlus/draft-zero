@@ -403,7 +403,7 @@ export default function Leaderboard() {
               <h4 className="text-xl">Draft Prediction</h4>
               <ul>
                 {entry.picks.map((p) => (
-                  <li className="list-decimal ml-6" key={p}>{p}</li>
+                  <li className="list-decimal ml-6" key={p}>{p} <code>&nbsp;</code></li>
                 ))}
               </ul>
             </div>
@@ -414,7 +414,7 @@ export default function Leaderboard() {
                 <ul>
                   {entry.scores.map((s, i) => (
                     <li className="list-decimal ml-6" key={i}>
-                      {s.item.name}: <code className="font-bold">{s.score}</code>
+                      {s.item.name}: <code>{s.score}</code>
                     </li>
                   ))}
                 </ul>
