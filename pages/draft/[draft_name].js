@@ -161,7 +161,7 @@ export default function Draft() {
         {options.length === 0 && (
           <div className="hero-content text-center md:w-96">
             <div className="max-w-md">
-              <h1 className="text-4xl font-bold">Draft Not Yet Open</h1>
+              <h1 className="text-4xl font-bold">Draft Not Initialized</h1>
             </div>
           </div>
         )}
