@@ -115,6 +115,22 @@ export default function Leaderboard() {
     const z = !zap
     setZap(z)
   }
+
+  if (leaderboard.entries.length === 0) {
+    return (
+      <div className="min-h-screen grid-bg">
+        <Header />
+        <Nav />
+        <div className="hero md:px-20 lg:px-60">
+          <div className="hero-content text-center">
+            <div className="">
+              <h3 className="text-2xl font-bold">{description}</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
  
   return (
     <div className="min-h-screen grid-bg">
