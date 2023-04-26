@@ -52,9 +52,6 @@ async function getDraft(name) {
 }
 
 async function getEntries(name, draft) {
-  // TODO: filter on name
-  // TODO: set PENALTY in draft collection obj
-
   const PENALTY = 50
   const collection = 'entries'
   const entries = await client.query(
@@ -67,7 +64,7 @@ async function getEntries(name, draft) {
   const { items } = draft
   const drafted = items.map((name) => ({name}))
 
-  return entries.data.map((e) => {
+  return entries.data.filter((e) => e.data.draft_name === name).map((e) => {
     const entry = e.data.picks.map((name) => ({name})) 
     const result = scores(entry, drafted, PENALTY)
     const total = result.length ? result.reduce((a, b) => ({ score: a.score + b.score })) : 0
@@ -87,7 +84,7 @@ export default async function leaderboard(req, res) {
     query: { draft_name },
   } = req
 
-  const drafts = ['nfl-2022']
+  const drafts = ['nfl-2022', 'nfl-2023']
   if (!drafts.includes(draft_name)) {
     res.status(200).json({ draft: { description: 'Draft Not Initialized', items: []}, entries: [] } )
   } else {

@@ -158,13 +158,6 @@ export default function Draft() {
       <Header />
       <Nav />
       <div className="hero">
-        {options.length === 0 && (
-          <div className="hero-content text-center md:w-96">
-            <div className="max-w-md">
-              <h1 className="text-4xl font-bold">Draft Not Initialized</h1>
-            </div>
-          </div>
-        )}
         {options.length > 0 && (
           <div className="hero-content text-center md:w-96">
             <div className="max-w-md">

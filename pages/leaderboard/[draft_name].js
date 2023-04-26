@@ -139,7 +139,7 @@ export default function Leaderboard() {
       <div className="hero md:px-20 lg:px-60">
         <div className="hero-content text-center">
           <div className="">
-            <h1 className="text-4xl font-bold">Leaderboard</h1>
+            <h1 className="text-4xl font-bold">Live Leaderboard</h1>
             <h3 className="text-2xl font-bold">{description}</h3>
             {fetching ? (
               <div className="mt-3">

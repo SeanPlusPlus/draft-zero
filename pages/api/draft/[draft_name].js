@@ -55,7 +55,7 @@ export default async function leaderboard(req, res) {
     query: { draft_name },
   } = req
 
-  const drafts = ['nfl-2022']
+  const drafts = ['nfl-2022', 'nfl-2023']
 
   if (!drafts.includes(draft_name)) {
     res.status(200).json({ options: [] })
