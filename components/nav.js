@@ -148,7 +148,7 @@ const Nav = () => {
               <div>
 
                 <p className="pb-4">
-                  Do your best to predict the outcome of the 2022 NFL Draft. The scoring for your submission works as follows:
+                  Do your best to predict the outcome of the 2023 NFL Draft. The scoring for your submission works as follows:
                 </p>
                 <p className="pb-4">
                   Each pick receives the square of the absolute value of the number of positions that it is off from where the athlete was actually drafted. Trades will not affect the outcome, the only thing that matters is the spot the athlete was drafted in.

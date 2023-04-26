@@ -1,5 +1,4 @@
 // components
-import Login from './login'
 import DraftLink from './draftLink'
 
 const Home = () => {
@@ -11,7 +10,6 @@ const Home = () => {
           <p className="py-6">
             Build a prediction for any draft
           </p>
-          <Login />
           <DraftLink />
         </div>
       </div>
