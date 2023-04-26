@@ -21,11 +21,11 @@ const DraftLink = () => {
           <div className="btn-group">
             {!featured.closed && (
               <Link href={featured.draft_link}>
-                <a className="btn btn-secondary md:w-40">Draft</a>
+                <a className="btn btn-secondary md:w-40">Make your picks</a>
               </Link>
             )}
             <Link href={featured.leaderboard_link}>
-              <a className="btn btn-outline md:w-40">Leaderboard</a>
+              <a className="btn btn-outline md:w-40">Live Leaderboard</a>
             </Link>
           </div>
         </div>
